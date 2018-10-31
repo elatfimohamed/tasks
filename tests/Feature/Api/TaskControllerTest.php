@@ -27,7 +27,7 @@ class TaskControllerTest extends TestCase
         $task = factory(Task::class)->create();
 
         // 2
-        $response = $this->json('GET', '/api/v1/tasks/' . $task->id);
+        $response = $this->get('/api/v1/tasks/' . $task->id);
 
         // 3
         $result = json_decode($response->getContent());
@@ -46,7 +46,7 @@ class TaskControllerTest extends TestCase
         $task = factory(Task::class)->create();
 
         // 2
-        $response = $this->json('DELETE', '/api/v1/tasks/' . $task->id);
+        $response = $this->delete('/api/v1/tasks/' . $task->id);
 
         // 3
         $result = json_decode($response->getContent());
@@ -59,46 +59,12 @@ class TaskControllerTest extends TestCase
     /**
      * @test
      */
-    public function cannot_create_task_without_name()
-    {
-        // 1
-        // 2
-        $response = $this->json('POST', '/api/v1/tasks/', [
-            'name' => ''
-        ]);
-
-        // 3
-        $result = json_decode($response->getContent());
-        $response->assertStatus(422);
-
-    }
-
-    /**
-     * @test
-     */
-    public function cannot_edit_task_without_name()
-    {
-        // 1
-        $oldTask = factory(Task::class)->create();
-        // 2
-        $response = $this->json('PUT', '/api/v1/tasks/' . $oldTask->id, [
-            'name' => ''
-        ]);
-
-        // 3
-        $response->assertStatus(422);
-
-    }
-
-    /**
-     * @test
-     */
     public function can_create_task()
     {
         $this->withoutExceptionHandling();
         // 1
         // 2
-        $response = $this->json('POST', '/api/v1/tasks/', [
+        $response = $this->post('/api/v1/tasks/', [
             'name' => 'Comprar pa'
         ]);
 
@@ -119,7 +85,7 @@ class TaskControllerTest extends TestCase
     {
         create_example_tasks();
 
-        $response = $this->json('GET', '/api/v1/tasks/', [
+        $response = $this->get('/api/v1/tasks/', [
             'name' => 'Comprar pa'
         ]);
         $response->assertSuccessful();
@@ -145,7 +111,7 @@ class TaskControllerTest extends TestCase
             'name' => 'Comprar llet'
         ]);
         // 2
-        $response = $this->json('PUT', '/api/v1/tasks/' . $oldTask->id, [
+        $response = $this->put('/api/v1/tasks/' . $oldTask->id, [
             'name' => 'Comprar pa'
         ]);
         // 3

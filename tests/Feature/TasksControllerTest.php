@@ -4,15 +4,12 @@
 namespace Tests\Feature;
 
 use App\Task;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TasksControllerTest extends TestCase
 {
     use RefreshDatabase;
-
-//    use WithoutMiddleware;
 
     /**
      * @test
@@ -48,11 +45,13 @@ class TasksControllerTest extends TestCase
      */
     public function can_store_task()
     {
-        $response = $this->post('/tasks', [
+        $response = $this->post('/tasks',[
             'name' => 'Comprar llet'
         ]);
+
         $response->assertStatus(302);
-        $this->assertDatabaseHas('tasks', ['name' => 'Comprar llet']);
+
+        $this->assertDatabaseHas('tasks',['name' => 'Comprar llet']);
     }
 
     /**
@@ -91,7 +90,7 @@ class TasksControllerTest extends TestCase
 
         // 3
         $response->assertStatus(302);
-        $this->assertDatabaseMissing('tasks', ['name' => 'Comprar llet']);
+        $this->assertDatabaseMissing('tasks',['name' => 'Comprar llet']);
 
     }
 
@@ -103,21 +102,23 @@ class TasksControllerTest extends TestCase
         // 1
         $task = Task::create([
             'name' => 'asdasdasd',
-            'completed' => '0'
+            'completed' => false
         ]);
         //2
-        $response = $this->put('/tasks/' . $task->id, $newTask = [
+        $response = $this->put('/tasks/' . $task->id,$newTask = [
             'name' => 'Comprar pa',
-            'completed' => '1'
+            'completed' => true
         ]);
         $response->assertStatus(302);
 //            $response->assertStatus(200);
+
         // 2 opcions
 //        $this->assertDatabaseHas('tasks',$newTask);
 //        $this->assertDatabaseMissing('tasks',$task);
+
         $task = $task->fresh();
-        $this->assertEquals($task->name, $newTask['name']);
-        $this->assertEquals($task->completed, $newTask['completed']);
+        $this->assertEquals($task->name,'Comprar pa');
+        $this->assertEquals($task->completed,true);
     }
 
     /**
@@ -133,7 +134,7 @@ class TasksControllerTest extends TestCase
             'completed' => false
         ]);
         //2
-        $response = $this->put('/tasks/' . $task->id, $newTask = [
+        $response = $this->put('/tasks/' . $task->id,$newTask = [
             'completed' => true
         ]);
         $response->assertSuccessful();
@@ -144,8 +145,8 @@ class TasksControllerTest extends TestCase
 //        $this->assertDatabaseMissing('tasks',$task);
 
         $task = $task->fresh();
-        $this->assertEquals($task->name, 'Comprar pa');
-        $this->assertEquals((boolean)$task->completed, true);
+        $this->assertEquals($task->name,'Comprar pa');
+        $this->assertEquals($task->completed,true);
     }
 
     /**
@@ -157,7 +158,7 @@ class TasksControllerTest extends TestCase
         // TDD Test Driven Development ->
 
         // 2 execute HTTP REQUEST -> HTTP RESPONSE (resposta)
-        $response = $this->put('/tasks/1', []);
+        $response = $this->put('/tasks/1',[]);
 //        dd($response->getContent());
         // 3 assert
         $response->assertStatus(404);

@@ -1,14 +1,10 @@
 <?php
 
-namespace Tests\Feature;
-
 use App\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class TasksVueControllerTest extends TestCase
-{
-
+class TasksVueControllerTest extends TestCase{
     use RefreshDatabase;
 
     /**
@@ -17,15 +13,18 @@ class TasksVueControllerTest extends TestCase
     public function can_show_vue_tasks()
     {
         $this->withoutExceptionHandling();
-        // Prepare
+        // 1 PREPARE
         create_example_tasks();
-        // Execute
+
+        // 2 EXECUTE
         $response = $this->get('/tasks_vue');
-        // Assert
+
+        // 3 ASSERT
         $response->assertSuccessful();
+
         $response->assertViewIs('tasks_vue');
         $response->assertViewHas('tasks',Task::all());
 
-    }
 
+    }
 }

@@ -1,23 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Task;
 use Illuminate\Http\Request;
 
-class TasksCompletedController extends Controller
+class CompletedTasksController extends Controller
 {
 
     public function store(Request $request, Task $task)
     {
-        $task->completed = true;
+        $task->completed=true;
         $task->save();
+
+        return redirect('/tasks');
     }
 
     public function destroy(Request $request, Task $task)
     {
-        $task->completed = false;
+        $task->completed=false;
         $task->save();
+        return redirect()->back();
     }
+
+
+
 }

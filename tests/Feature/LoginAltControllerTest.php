@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
@@ -25,24 +24,22 @@ class LoginAltControllerTest extends TestCase
 
         $this->assertNull(Auth::user());
 
-        //2
-        $response = $this->post('/login_alt', [
-            'email' => $user->email,
+        // 2
+        $response = $this->post('/login_alt',[
+            'email' => 'prova@gmail.com', //$user->email
             'password' => 'secret'
         ]);
-
-        //3
+//        dd($response);
         $response->assertStatus(302);
         $response->assertRedirect('/home');
         $this->assertNotNull(Auth::user());
-        $this->assertEquals($user->email, Auth::user()->email);
-
+        $this->assertEquals('prova@gmail.com',Auth::user()->email);
     }
 
     /**
      * @test
      */
-    public function cannot_login_a_user_with_incorrect_password()
+    public function cannot_login_an_user_with_incorrect_password()
     {
 //        $this->withoutExceptionHandling();
         //1
@@ -52,23 +49,21 @@ class LoginAltControllerTest extends TestCase
 
         $this->assertNull(Auth::user());
 
-        //2
-        $response = $this->post('/login_alt', [
-            'email' => $user->email,
-            'password' => 'gaerhharth'
+        // 2
+        $response = $this->post('/login_alt',[
+            'email' => 'prova@gmail.com', //$user->email
+            'password' => 'asdjaskdlasdasd0798asdjh'
         ]);
-
-        //3
+//        dd($response);
         $response->assertStatus(302);
         $response->assertRedirect('/');
         $this->assertNull(Auth::user());
-
     }
 
     /**
      * @test
      */
-    public function cannot_login_a_user_with_user_password()
+    public function cannot_login_an_user_with_incorrec_user()
     {
 //        $this->withoutExceptionHandling();
         //1
@@ -78,17 +73,14 @@ class LoginAltControllerTest extends TestCase
 
         $this->assertNull(Auth::user());
 
-        //2
-        $response = $this->post('/login_alt', [
-            'email' => 'argaergha@gmail.com',
+        // 2
+        $response = $this->post('/login_alt',[
+            'email' => 'provaasdasdasd@gmail.com', //$user->email
             'password' => 'secret'
         ]);
-
-        //3
+//        dd($response);
         $response->assertStatus(302);
         $response->assertRedirect('/');
         $this->assertNull(Auth::user());
-
     }
-
 }

@@ -6,8 +6,7 @@ use App\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class CompletedTaskControllerTest extends TestCase
-{
+class CompletedTaskControllerTest extends TestCase {
     use RefreshDatabase;
 
     /**
@@ -16,19 +15,18 @@ class CompletedTaskControllerTest extends TestCase
     public function can_complete_a_task()
     {
         $this->withoutExceptionHandling();
-        //1
-        $task = Task::create([
+        $task= Task::create([
             'name' => 'comprar pa',
             'completed' => false
         ]);
         //2
-        $response = $this->post('/taskscompleted/' . $task->id);
+        $response = $this->post('/completed_task/' . $task->id);
         //3 Dos opcions: 1) Comprovar base de dades directament
         // 2) comprovar canvis al objecte $task
         $task = $task->fresh();
         $response->assertRedirect('/tasks');
         $response->assertStatus(302);
-        $this->assertEquals((boolean)$task->completed, true);
+        $this->assertEquals($task->completed, true);
     }
 
     /**
@@ -46,20 +44,19 @@ class CompletedTaskControllerTest extends TestCase
      */
     public function can_uncomplete_a_task()
     {
-        $this->withoutExceptionHandling();
         //1
-        $task = Task::create([
+        $task= Task::create([
             'name' => 'comprar pa',
             'completed' => true
         ]);
         //2
-        $response = $this->delete('/taskscompleted/' . $task->id);
+        $response = $this->delete('/completed_task/' . $task->id);
         //3 Dos opcions: 1) Comprovar base de dades directament
         // 2) comprovar canvis al objecte $task
         $task = $task->fresh();
+        $this->assertEquals($task->completed, false);
         $response->assertRedirect('/tasks');
-        $response->assertStatus(302);
-        $this->assertEquals((boolean)$task->completed, false);
+        $response->assertStatus('302');
     }
 
     /**
@@ -69,7 +66,7 @@ class CompletedTaskControllerTest extends TestCase
     {
         // 1 -> no cal fer res
         // 2 Execute
-        $response = $this->delete('/completed_task/1');
+        $response= $this->delete('/completed_task/1');
         //3 Assert
         $response->assertStatus(404);
     }
