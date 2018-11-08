@@ -1,12 +1,16 @@
 @extends('layouts.landing')
 
+@section('title')
+    Welcome
+@endsection
+
 @section('content')
     <v-app light>
         <v-toolbar class="white">
-            <v-toolbar-title>Aplicació de tasques</v-toolbar-title>
+            <v-toolbar-title>Tasks</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn href="/login">Login</v-btn>
-            <v-btn href="/register">Register</v-btn>
+            <v-btn href="register">Registrar</v-btn>
         </v-toolbar>
         <v-content>
             <section>
@@ -102,7 +106,7 @@
             </section>
 
             <section>
-                <v-parallax src="img/section.jpg" height="380">
+                <v-parallax src="img/section.jpeg" height="380">
                     <v-layout column align-center justify-center>
                         <div class="headline white--text mb-3 text-xs-center">Web development has never been easier</div>
                         <em>Kick-start your application today</em>

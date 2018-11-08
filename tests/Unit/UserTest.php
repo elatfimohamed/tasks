@@ -1,21 +1,47 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: sergi
+ * Date: 19/10/18
+ * Time: 16:17
+ */
+
+namespace Tests\Unit;
 
 use App\Task;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 
 class UserTest extends TestCase
 {
-    use RefreshDatabase;
+    use refreshDatabase;
+
+    /**
+     * @test
+     */
+    public function can_add_tasks_to_user()
+    {
+        // 1
+        $user = factory(User::class)->create();
+        $task = factory(Task::class)->create();
+
+        $user->addTask($task);
+
+        //2
+        $tasks = $user->tasks;
+
+        // 3
+        $this->assertTrue($tasks[0]->is($task));
+    }
 
     /**
      * @test
      */
     public function user_can_have_tasks()
     {
-        // 1 Preparar
+        // 1
         $user = factory(User::class)->create();
         $task1 = factory(Task::class)->create();
         $task2 = factory(Task::class)->create();
@@ -24,10 +50,10 @@ class UserTest extends TestCase
         $user->addTask($task2);
         $user->addTask($task3);
 
-        // 2 executar
+        //2
         $tasks = $user->tasks;
 
-        // 3 comprovar
+        // 3
         $this->assertTrue($tasks[0]->is($task1));
         $this->assertTrue($tasks[1]->is($task2));
         $this->assertTrue($tasks[2]->is($task3));
@@ -36,34 +62,14 @@ class UserTest extends TestCase
     /**
      * @test
      */
-    public function user_tasks_returns_null_when_no_tasks()
+    public function user_tasks_return_null_when_no_tasks()
     {
-        // 1 Preparar
+        // 1
         $user = factory(User::class)->create();
-
-        // 2 executar
+        //2
         $tasks = $user->tasks;
-
-        // 3 comprovar
+        // 3
         $this->assertEmpty($tasks);
-    }
-
-    /**
-     * @test
-     */
-    public function can_add_task_to_user()
-    {
-        // 1 Preparar
-        $user = factory(User::class)->create();
-        $task = factory(Task::class)->create();
-
-        $user->addTask($task);
-
-        // 2 executar
-        $tasks = $user->tasks;
-
-        // 3 comprovar
-        $this->assertTrue($tasks[0]->is($task));
     }
 
 }

@@ -1,10 +1,13 @@
 <?php
 
 namespace Tests\Feature;
+
+
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 class RegisterControllerTest extends TestCase
@@ -14,88 +17,59 @@ class RegisterControllerTest extends TestCase
     /**
      * @test
      */
-    public function can_register_a_user()
+    public function cannot_register_a_user_when_not_passing_any_values()
+    {
+        //1
+        //2
+        $response = $this->post('/register', []);
+        //3
+        $response->assertStatus(302);
+        $response->assertRedirect('/');
+    }
+
+    /**
+     * @test
+     */
+    public function can_login_a_user()
     {
 //        $this->withoutExceptionHandling();
-        //1
-        $user = factory(User::class)->create([
-            'email' => 'prova@gmail.com'
-        ]);
-
         $this->assertNull(Auth::user());
+        //1
 
-        // 2
-        $response = $this->post('/register',$user =[
-            'name' => 'mohamed',
-            'email' => 'mohamed@iesebre.com',
-            'password' => 'gfhgfhgfhgfhgfhgfh',
-            'password_confirmation' => 'gfhgfhgfhgfhgfhgfh'
-
-
-
+        //2
+        $response = $this->post('/register', [
+            'name' => 'Sergi',
+            'email' => 'sergibaucells@iesebre.com',
+            'password' => 'secret',
+            'password_confirmation' => 'secret'
         ]);
-        //execucio
 
+        //3
         $response->assertStatus(302);
         $response->assertRedirect('/home');
+        $this->assertEquals('sergibaucells@iesebre.com', Auth::user()->email);
+        $this->assertEquals('Sergi', Auth::user()->name);
+        $this->assertTrue(Hash::check('secret', Auth::user()->password));
         $this->assertNotNull(Auth::user());
-
-
-        // Comprovat s'ha creat el suauri
-        $this->assertEquals($user->email,Auth::user()->email);
-        $this->assertEquals($user->name,Auth::user()->name);
-
-       // $this->assertEquals($user->password,Auth::user()->password());
-        $this->assertTrue(Hash::check($user['password'], Auth::user()->password));
-
-
+//        $this->assertDatabaseHas('users',['email' => 'sergibaucells@iesebre.com']);
     }
 
     /**
      * @test
      */
-    public function cannot_login_an_user_with_incorrect_password()
+    public function cannot_register_a_user_when__passing_error_values()
     {
-//        $this->withoutExceptionHandling();
         //1
-        $user = factory(User::class)->create([
-            'email' => 'prova@gmail.com'
+        //2
+        $response = $this->post('/register', [
+            'name' => '',
+            'email' => 'aa',
+            'password' => 'e',
+            'password_confirmation' => 'i'
         ]);
-
-        $this->assertNull(Auth::user());
-
-        // 2
-        $response = $this->post('/login',[
-            'email' => 'prova@gmail.com', //$user->email
-            'password' => 'asdjaskdlasdasd0798asdjh'
-        ]);
-//        dd($response);
+        //3
         $response->assertStatus(302);
         $response->assertRedirect('/');
-        $this->assertNull(Auth::user());
     }
 
-    /**
-     * @test
-     */
-    public function cannot_login_an_user_with_incorrec_user()
-    {
-//        $this->withoutExceptionHandling();
-        //1
-        $user = factory(User::class)->create([
-            'email' => 'prova@gmail.com'
-        ]);
-
-        $this->assertNull(Auth::user());
-
-        // 2
-        $response = $this->post('/login',[
-            'email' => 'provaasdasdasd@gmail.com', //$user->email
-            'password' => 'secret'
-        ]);
-//        dd($response);
-        $response->assertStatus(302);
-        $response->assertRedirect('/');
-        $this->assertNull(Auth::user());
-    }
 }

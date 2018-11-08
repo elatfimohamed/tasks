@@ -4,8 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Task extends Model
 {
+//    protected $fillable = ['name','completed'];
     protected $guarded = [];
 
     /**
@@ -19,6 +21,7 @@ class Task extends Model
 
     public function file()
     {
+        // return $this->hasOne('App\File');
         return $this->hasOne(File::class);
     }
 
@@ -28,9 +31,9 @@ class Task extends Model
         $file->save();
     }
 
-    public function addTags($tags)
+    public function tags()
     {
-        $this->tags()->saveMany($tags);
+        return $this->belongsToMany(Tag::class);
     }
 
     public function addTag($tag)
@@ -38,9 +41,9 @@ class Task extends Model
         $this->tags()->save($tag);
     }
 
-    public function tags()
+    public function addTags(array $tags)
     {
-        return $this->belongsToMany(Tag::class);
+        $this->tags()->saveMany($tags);
     }
 
     public function assignUser(User $user)
@@ -56,7 +59,7 @@ class Task extends Model
 
     public function toggleCompleted()
     {
-        $this->completed= !$this->completed;
+        $this->completed = !$this->completed;
         $this->save();
     }
 
@@ -68,8 +71,13 @@ class Task extends Model
             'completed' => $this->completed,
             'user_id' => $this->user_id,
             'user_name' => optional($this->user)->name,
-//            'tags' => $this->tags
-//            'file' => $this->file
+            'user_email' => optional( $this->user)-> email,
+            'user' => $this->user
+
+
+//            'tags' => $this->tags,
+//            'file' => $this->file,
         ];
     }
+
 }

@@ -7,13 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title','Put your title here')</title>
+    <title>@yield('title')</title>
 </head>
 <body>
 <div id="app">
     @yield('content')
-
 </div>
-<script src="{{ mix('/js/app.js') }}"></script>
+<script src="{{mix('js/app.js')}}"></script>
 </body>
 </html>

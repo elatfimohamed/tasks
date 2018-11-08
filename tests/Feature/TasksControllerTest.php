@@ -4,12 +4,16 @@
 namespace Tests\Feature;
 
 use App\Task;
+use App\User;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TasksControllerTest extends TestCase
 {
     use RefreshDatabase;
+
+//    use WithoutMiddleware;
 
     /**
      * @test
@@ -20,6 +24,7 @@ class TasksControllerTest extends TestCase
 
         //1 Prepare
         create_example_tasks();
+        login($this);
 
 //        dd(Task::find(1));
 
@@ -45,13 +50,12 @@ class TasksControllerTest extends TestCase
      */
     public function can_store_task()
     {
-        $response = $this->post('/tasks',[
+        login($this);
+        $response = $this->post('/tasks', [
             'name' => 'Comprar llet'
         ]);
-
         $response->assertStatus(302);
-
-        $this->assertDatabaseHas('tasks',['name' => 'Comprar llet']);
+        $this->assertDatabaseHas('tasks', ['name' => 'Comprar llet']);
     }
 
     /**
@@ -59,6 +63,7 @@ class TasksControllerTest extends TestCase
      */
     public function cannnot_delete_an_unexisting_task()
     {
+        login($this);
         $response = $this->delete('/tasks/1');
         $response->assertStatus(404);
     }
@@ -78,7 +83,8 @@ class TasksControllerTest extends TestCase
      */
     public function can_delete_task()
     {
-        $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
+        login($this);
 
         // 1
         $task = Task::create([
@@ -90,7 +96,7 @@ class TasksControllerTest extends TestCase
 
         // 3
         $response->assertStatus(302);
-        $this->assertDatabaseMissing('tasks',['name' => 'Comprar llet']);
+        $this->assertDatabaseMissing('tasks', ['name' => 'Comprar llet']);
 
     }
 
@@ -100,25 +106,24 @@ class TasksControllerTest extends TestCase
     public function can_edit_a_task()
     {
         // 1
+        login($this);
         $task = Task::create([
             'name' => 'asdasdasd',
-            'completed' => false
+            'completed' => '0'
         ]);
         //2
-        $response = $this->put('/tasks/' . $task->id,$newTask = [
+        $response = $this->put('/tasks/' . $task->id, $newTask = [
             'name' => 'Comprar pa',
-            'completed' => true
+            'completed' => '1'
         ]);
         $response->assertStatus(302);
 //            $response->assertStatus(200);
-
         // 2 opcions
 //        $this->assertDatabaseHas('tasks',$newTask);
 //        $this->assertDatabaseMissing('tasks',$task);
-
         $task = $task->fresh();
-        $this->assertEquals($task->name,'Comprar pa');
-        $this->assertEquals($task->completed,true);
+        $this->assertEquals($task->name, $newTask['name']);
+        $this->assertEquals($task->completed, $newTask['completed']);
     }
 
     /**
@@ -134,7 +139,7 @@ class TasksControllerTest extends TestCase
             'completed' => false
         ]);
         //2
-        $response = $this->put('/tasks/' . $task->id,$newTask = [
+        $response = $this->put('/tasks/' . $task->id, $newTask = [
             'completed' => true
         ]);
         $response->assertSuccessful();
@@ -145,8 +150,8 @@ class TasksControllerTest extends TestCase
 //        $this->assertDatabaseMissing('tasks',$task);
 
         $task = $task->fresh();
-        $this->assertEquals($task->name,'Comprar pa');
-        $this->assertEquals($task->completed,true);
+        $this->assertEquals($task->name, 'Comprar pa');
+        $this->assertEquals((boolean)$task->completed, true);
     }
 
     /**
@@ -156,9 +161,9 @@ class TasksControllerTest extends TestCase
     {
 //        $this->withoutExceptionHandling();
         // TDD Test Driven Development ->
-
+        login($this);
         // 2 execute HTTP REQUEST -> HTTP RESPONSE (resposta)
-        $response = $this->put('/tasks/1',[]);
+        $response = $this->put('/tasks/1', []);
 //        dd($response->getContent());
         // 3 assert
         $response->assertStatus(404);
@@ -170,6 +175,7 @@ class TasksControllerTest extends TestCase
     public function can_show_edit_form()
     {
         // 1
+        login($this);
         $task = Task::create([
             'name' => 'Comprar pa',
             'completed' => false
@@ -186,6 +192,7 @@ class TasksControllerTest extends TestCase
     public function cannot_show_edit_form_unexisting_task()
     {
 //        $this->withoutExceptionHandling();
+        login($this);
         $response = $this->get('/task_edit/1');
         $response->assertStatus(404);
     }

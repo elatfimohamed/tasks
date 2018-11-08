@@ -13,7 +13,7 @@ class TasksController extends Controller
 
     public function index(Request $request)
     {
-        return Task::orderBy('created_at')->get();
+        return Task::orderBy('created_at', 'desc')->get();
     }
 
     public function show(Request $request, Task $task) // Route Model Binding
@@ -23,11 +23,12 @@ class TasksController extends Controller
 
     public function destroy(Request $request, Task $task)
     {
-          $task->delete();
+        $task->delete();
     }
 
     public function store(StoreTask $request)
     {
+//        Task:create();
         $task = new Task();
         $task->name = $request->name;
         $task->completed = false;
@@ -41,5 +42,4 @@ class TasksController extends Controller
         $task->save();
         return $task->map();
     }
-
 }

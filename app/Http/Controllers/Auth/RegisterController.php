@@ -68,15 +68,5 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-
-    }
-
-
-    protected function register()
-    {
-
-        Auth::login($user);
-
-
     }
 }

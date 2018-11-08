@@ -15,9 +15,12 @@
     <div class="flex flex-col">
         <h1 class="text-center text-red-light">Tasques</h1>
         <div class="flex-row">
-            <input id="newTask" onblur="addTask()" type="text" placeholder="Nova Tasca"
+            <!--<input id="newTask" onblur="addTask()" type="text" placeholder="Nova Tasca"-->
+            <input id="newTask" onkeypress="validar(event)" type="text" placeholder="Nova Tasca"
                    class="m-3 mt-5 p-2 pl-5 shadow border rounded focus:outline-none focus:shadow-outline text-grey-darker">
-            <svg onclick="addTask()" class="h-3 w-3"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/></svg>
+            <svg onclick="addTask()" class="h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/>
+            </svg>
         </div>
 
         <!--Aniria la llista-->
@@ -30,27 +33,33 @@
 </div>
 
 <script>
-    var tasks = ["Comprar tomates","Comprar llet","Estudiar PHP","Fucking hostile"] // HARDCODED
+
+    function validar(e) {
+        var tecla = (document) ? e.keyCode : e.which;
+        if (tecla === 13) addTask();
+    }
+
+    var tasks = ["Comprar tomates", "Comprar llet", "Estudiar PHP", "Fucking hostile"] // HARDCODED
 
     function addTask() {
         // Afegir la tasca al vector tasks
         // Manipulació d'arrays
         var task = document.getElementById('newTask')
         console.log(task.value);
-        tasks.splice(0,0,task.value)
+        tasks.splice(0, 0, task.value)
         console.log(tasks)
         draw_list()
     }
 
     function draw_list() {
-        // document -> DOM
         var divtasks = document.getElementById('tasks')
+        divtasks.innerHTML = ''
         var ul = document.createElement('ul')
-        ul.setAttribute('class','list-reset')
+        ul.setAttribute('class', 'list-reset')
         tasks.forEach(function (task) {
             var li = document.createElement('li')
             var text = document.createTextNode(task)
-            li.setAttribute('class','text-grey-darker m-2 pl-5')
+            li.setAttribute('class', 'text-grey-darker m-2 pl-5')
             li.appendChild(text)
             ul.appendChild(li)
         })

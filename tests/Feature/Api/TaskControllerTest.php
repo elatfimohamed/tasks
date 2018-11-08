@@ -17,17 +17,17 @@ class TaskControllerTest extends TestCase
      */
     public function can_show_a_task()
     {
-        $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
         // routes/api.php
         // http:// tasks.test/api/v1/tasks
         // HTTP -> GET | POST | PUT | DELETE
-
+        login($this,'api');
         //1
         // Task:create()
         $task = factory(Task::class)->create();
 
         // 2
-        $response = $this->get('/api/v1/tasks/' . $task->id);
+        $response = $this->json('GET', '/api/v1/tasks/' . $task->id);
 
         // 3
         $result = json_decode($response->getContent());
@@ -41,12 +41,13 @@ class TaskControllerTest extends TestCase
      */
     public function can_delete_task()
     {
-        $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
         // 1
+        login($this,'api');
         $task = factory(Task::class)->create();
 
         // 2
-        $response = $this->delete('/api/v1/tasks/' . $task->id);
+        $response = $this->json('DELETE', '/api/v1/tasks/' . $task->id);
 
         // 3
         $result = json_decode($response->getContent());
@@ -59,12 +60,49 @@ class TaskControllerTest extends TestCase
     /**
      * @test
      */
+    public function cannot_create_task_without_name()
+    {
+        // 1
+        login($this,'api');
+        // 2
+        $response = $this->json('POST', '/api/v1/tasks/', [
+            'name' => ''
+        ]);
+
+        // 3
+        $result = json_decode($response->getContent());
+        $response->assertStatus(422);
+
+    }
+
+    /**
+     * @test
+     */
+    public function cannot_edit_task_without_name()
+    {
+        // 1
+        login($this,'api');
+        $oldTask = factory(Task::class)->create();
+        // 2
+        $response = $this->json('PUT', '/api/v1/tasks/' . $oldTask->id, [
+            'name' => ''
+        ]);
+
+        // 3
+        $response->assertStatus(422);
+
+    }
+
+    /**
+     * @test
+     */
     public function can_create_task()
     {
-        $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
         // 1
+        login($this,'api');
         // 2
-        $response = $this->post('/api/v1/tasks/', [
+        $response = $this->json('POST', '/api/v1/tasks/', [
             'name' => 'Comprar pa'
         ]);
 
@@ -83,9 +121,10 @@ class TaskControllerTest extends TestCase
      */
     public function can_list_task()
     {
+        login($this,'api');
         create_example_tasks();
 
-        $response = $this->get('/api/v1/tasks/', [
+        $response = $this->json('GET', '/api/v1/tasks/', [
             'name' => 'Comprar pa'
         ]);
         $response->assertSuccessful();
@@ -107,11 +146,12 @@ class TaskControllerTest extends TestCase
     public function can_edit_task()
     {
         // 1
+        login($this,'api');
         $oldTask = factory(Task::class)->create([
             'name' => 'Comprar llet'
         ]);
         // 2
-        $response = $this->put('/api/v1/tasks/' . $oldTask->id, [
+        $response = $this->json('PUT', '/api/v1/tasks/' . $oldTask->id, [
             'name' => 'Comprar pa'
         ]);
         // 3

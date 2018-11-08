@@ -1,9 +1,12 @@
 <?php
 
 namespace Tests\Feature;
+
+
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 class LoginControllerTest extends TestCase
@@ -23,22 +26,24 @@ class LoginControllerTest extends TestCase
 
         $this->assertNull(Auth::user());
 
-        // 2
-        $response = $this->post('/login',[
-            'email' => 'prova@gmail.com', //$user->email
+        //2
+        $response = $this->post('/login', [
+            'email' => $user->email,
             'password' => 'secret'
         ]);
-//        dd($response);
+
+        //3
         $response->assertStatus(302);
         $response->assertRedirect('/home');
         $this->assertNotNull(Auth::user());
-        $this->assertEquals('prova@gmail.com',Auth::user()->email);
+        $this->assertEquals($user->email, Auth::user()->email);
+
     }
 
     /**
      * @test
      */
-    public function cannot_login_an_user_with_incorrect_password()
+    public function cannot_login_a_user_with_incorrect_password()
     {
 //        $this->withoutExceptionHandling();
         //1
@@ -48,21 +53,24 @@ class LoginControllerTest extends TestCase
 
         $this->assertNull(Auth::user());
 
-        // 2
-        $response = $this->post('/login',[
-            'email' => 'prova@gmail.com', //$user->email
-            'password' => 'asdjaskdlasdasd0798asdjh'
+        //2
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'gaerhharth'
         ]);
-//        dd($response);
+
+        //3
+        Session::get('errors')->email;
         $response->assertStatus(302);
         $response->assertRedirect('/');
         $this->assertNull(Auth::user());
+
     }
 
     /**
      * @test
      */
-    public function cannot_login_an_user_with_incorrec_user()
+    public function cannot_login_a_user_with_user_password()
     {
 //        $this->withoutExceptionHandling();
         //1
@@ -72,14 +80,17 @@ class LoginControllerTest extends TestCase
 
         $this->assertNull(Auth::user());
 
-        // 2
-        $response = $this->post('/login',[
-            'email' => 'provaasdasdasd@gmail.com', //$user->email
+        //2
+        $response = $this->post('/login', [
+            'email' => 'argaergha@gmail.com',
             'password' => 'secret'
         ]);
-//        dd($response);
+
+        //3
         $response->assertStatus(302);
         $response->assertRedirect('/');
         $this->assertNull(Auth::user());
+
     }
+
 }

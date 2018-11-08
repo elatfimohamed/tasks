@@ -1,30 +1,21 @@
-@extends('layouts.login')
 
-@section('title')
-    Login a l'aplicació de Tasks
-@endsection
-@section('content')
-    <v-content>
-        @if ($errors->any())
-            <v-alert
-                    :value="true"
-                    type="error"
-            >
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </v-alert>
-        @endif
-        <v-container fluid fill-height>
-            <v-layout align-center justify-center>
-                <v-flex xs12 sm8 md4>
-                    <v-card class="elevation-12">
-                        <login-form email="{{ old('email') }}" csrf-token="{{ csrf_token() }}"></login-form>
-                    </v-card>
-                </v-flex>
-            </v-layout>
-        </v-container>
-    </v-content>
-@endsection
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('title')</title>
+</head>
+<body>
+<div id="app">
+    <v-app>
+        @yield('content')
+    </v-app>
+</div>
+<script src="{{mix('js/app.js')}}"></script>
+</body>
+</html>
