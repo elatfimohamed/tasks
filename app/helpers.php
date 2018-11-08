@@ -59,15 +59,15 @@ if (!function_exists('create_mysql_database')) {
 }
 
 
-if (!function_exists('create_mysql_user')) {
-    function create_mysql_user($name, $password =null, $host = 'localhost')
-    {
-        // PDO
-        // MYSQL: CREATE DATABASE IF NOT EXISTS $name
-        if()
-        DB::connection('mysqlroot')->getPdo()->exec($statement);
-    }
-}
+//if (!function_exists('create_mysql_user')) {
+//    function create_mysql_user($name, $password =null, $host = 'localhost')
+//    {
+//        // PDO
+//        // MYSQL: CREATE DATABASE IF NOT EXISTS $name
+//        if()
+//        DB::connection('mysqlroot')->getPdo()->exec($statement);
+//    }
+//}
 
 
 
