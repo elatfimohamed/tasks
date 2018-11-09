@@ -11,7 +11,7 @@ Auth::routes();
 
 // GRUP DE URLS PER USUARIS AUTENTICATS
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth:api'])->group(function () {
     Route::post('/tasks', 'TasksController@store');
     Route::delete('/tasks/{id}', 'TasksController@destroy');
     Route::put('/tasks/{id}', 'TasksController@update');
@@ -29,6 +29,11 @@ Route::middleware(['auth'])->group(function () {
 // Propies
     Route::post('/taskscompleted/{task}', 'TasksCompletedController@store');
     Route::delete('/taskscompleted/{task}', 'TasksCompletedController@destroy');
+
+
+    // USER TASKS
+    Route::get('/user/tasks','LoggedUserTasksController@index');
+
 
 });
 Route::get('/tasks', 'TasksController@index');

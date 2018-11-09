@@ -76,44 +76,16 @@ export default {
   name: 'Tasques',
   data () {
     return {
-      dataTasks: [
-        {
-          id: 1,
-          name: 'Comprar pa',
-          completed: false,
-          user_id: 1,
-          created_at: 'fa 1 minut',
-          updated_at: 'fa 1 minut'
-        },
-        {
-          id: 2,
-          name: 'Comprar llet',
-          completed: false,
-          user_id: 1,
-          created_at: 'fa 1 minut',
-          updated_at: 'fa 1 minut'
-        },
-        {
-          id: 3,
-          name: 'Estudiar PHP',
-          completed: true,
-          user_id: 2,
-          created_at: 'fa 1 minut',
-          updated_at: 'fa 1 minut'
-        }
-      ],
-      headers: [
-        { text: 'Id', value: 'id' },
-        { text: 'Name', value: 'name' },
-        { text: 'User', value: 'user_id' },
-        { text: 'Completat', value: 'completed' },
-        { text: 'Creat', value: 'created_at' },
-        { text: 'Modificat', value: 'updated_at' },
-        { text: 'Accions', sortable: false }
-      ]
+      dataTasks: this tasques,
+        props: {
+
     }
-  },
   methods: {
+
+      refresh () {
+
+      }
+  }
     opcio1 () {
       console.log('OPCIO 1 REFRESH')
     },
