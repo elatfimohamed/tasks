@@ -5,7 +5,7 @@
                 <v-card-title class="headline">Esteu segurs??</v-card-title>
 
                 <v-card-text>
-                    Aquesta operació no es pot desfer.
+                    Aquesta operació no es pot desfer!
                 </v-card-text>
 
                 <v-card-actions>
