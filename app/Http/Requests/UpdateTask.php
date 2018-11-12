@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateTask extends FormRequest
 {
@@ -13,7 +14,10 @@ class UpdateTask extends FormRequest
      */
     public function authorize()
     {
+
         return true;
+       // return Auth::user()->can('task.update');
+        //return Auth::user()->isSuperAdmin() []
     }
 
     /**

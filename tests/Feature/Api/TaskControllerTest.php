@@ -3,6 +3,7 @@
 namespace Tests\Feature\Api;
 
 use App\Task;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -23,6 +24,10 @@ class TaskControllerTest extends TestCase
         // HTTP -> GET | POST | PUT | DELETE
         login($this,'api');
         //1
+
+        //TODO  assign permission to $user
+
+        //Gate::define('task.store');
         // Task:create()
         $task = factory(Task::class)->create();
 

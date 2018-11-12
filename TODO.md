@@ -8,5 +8,12 @@
 - [ ] Acabar i comprovar test Api/LoggedUserTasksControllerTest.php
 - [ ] Acabar i comprovar va be controller  Api/LoggedUserTasksControllerTest.php
 
+#Tasques pendents 
+
+
+# Fer en explitacio 
+- [X] composer install
+- [X] php artisan migrate 
+- [X]  
 
 # intallar 
