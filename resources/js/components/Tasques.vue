@@ -2,7 +2,7 @@
     <span>
         <v-dialog v-model="deleteDialog">
             <v-card>
-                <v-card-title class="headline">Esteu segurs?</v-card-title>
+                <v-card-title class="headline">Esteu segurs??</v-card-title>
 
                 <v-card-text>
                     Aquesta operació no es pot desfer.
