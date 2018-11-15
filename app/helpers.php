@@ -10,7 +10,7 @@ if (!function_exists('create_primary_user')) {
         if (!$user) {
             User::firstOrCreate([
                 'name' => 'mohamed elatfi',
-                'email' => 'mohamedelatfi@gmail.com',
+                'email' => 'mohamedatfi@iesebre.com',
                 'password' => bcrypt(env('PRIMARY_USER_PASSWORD', '977580262'))
             ]);
         }

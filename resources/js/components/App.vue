@@ -18,6 +18,7 @@ export default{
         ]
       },
       { icon: 'account_box', text: 'Sobre nosaltres', url: '/about' },
+      { icon: 'contact_phone', text: 'Contacte', url: '/contact' },
       { icon: 'date_range', text: 'Calendari', url: '/calendari' }
     ]
   }),

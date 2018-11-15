@@ -154,7 +154,7 @@ export default {
       snackbar: true,
       user: '',
       users: [
-        'Sergi Tur',
+        'Mohamed Elatfi',
         'Pepe Pardo',
         'Maria Delahoz'
       ],
@@ -215,6 +215,7 @@ export default {
       // setTimeout(() => { this.loading = false }, 5000)
       // OCO !! URL CANVIA SEGONS EL CAS!!! TODO
       // window.axios.get('/api/v1/tasks').then().catch()
+      // USERS  TASK o TOTES LES TASQUES?
       window.axios.get('/api/v1/user/tasks').then(response => {
         // SHOW SNACKBAR MISSATGE OK: 'Les tasques s'han actualitzat correctament
         this.dataTasks = response.data

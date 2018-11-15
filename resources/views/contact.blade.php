@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+
+{{--@section('title')--}}
+    {{--Contacte--}}
+{{--@endsection--}}
 @section('content')
-    Ens trobaràs a la plaça 1 Octubre bla bla bla...
+    Hola blalb labllblalalblablbl
+
+
+
+
 @endsection
+

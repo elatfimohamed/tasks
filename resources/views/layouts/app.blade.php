@@ -78,9 +78,9 @@
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <v-toolbar-title>Menú</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-avatar title="{{Auth::user()->name}}({{(Auth::user()->email)}})">
+            <v-avatar title="{{Auth::user()->name}}({{(Auth::user()->email)}})">
             <img src="https://www.gravatar.com/avatar/{{ md5(Auth::user()->email) }}" alt="avatar">
-        </v-avatar>
+             </v-avatar>
         <v-form action="logout" method="POST">
             @csrf
             <v-btn color="error" type="submit">Logout</v-btn>
@@ -99,7 +99,7 @@
         </v-container>
     </v-content>
     <v-footer color="indigo" app>
-        <span class="white--text">Created by Mohamed Elatfi , &copy; 2018 All rights reserved</span>
+        <span class="white--text">Created by Mohamed Elatfi, &copy; 2018 All rights reserved</span>
     </v-footer>
 </v-app>
 
