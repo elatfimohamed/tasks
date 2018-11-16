@@ -16,4 +16,9 @@
 - [X] php artisan migrate 
 - [X]  
 
+
+# crear un usuari per profer
+- [] Crear usuari per profe contrasenya secret  
+- [] sergiturbadenas@gmail.com
+
 # intallar 
