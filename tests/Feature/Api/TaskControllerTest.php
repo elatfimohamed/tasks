@@ -3,26 +3,46 @@
 namespace Tests\Feature\Api;
 
 use App\Task;
-use Illuminate\Auth\Access\Gate;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Feature\Traits\CanLogin;
 use Tests\TestCase;
+
 
 class TaskControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase , CanLogin;
 
     // CRUD -> CRU -> CREATE RETRIEVE UPDATE DELETE
     // BREAD -> PA -> BROWSE READ EDIT ADD DELETE
     /**
      * @test
      */
-    public function can_show_a_task()
+    public function task_manager_can_show_a_task()
+    {
+
+        $user = $this->login('api');
+        initialize_roles();
+        $user->assignRole('TaskManager');
+        //1
+        //TODO  assign permission to $user
+        $task = factory(Task::class)->create();
+
+
+        $response = $this->json('GET', '/api/v1/tasks/' . $task->id);
+
+        $result = json_decode($response->getContent());
+        $response->assertSuccessful();
+        $this->assertEquals($task->name, $result->name);
+        $this->assertEquals($task->completed, (boolean)$result->completed);
+    }
+
+    public function regular_user_cannot_show_a_task()
     {
 //        $this->withoutExceptionHandling();
         // routes/api.php
         // http:// tasks.test/api/v1/tasks
         // HTTP -> GET | POST | PUT | DELETE
-        login($this,'api');
+        $user = $this->login($this,'api');
         //1
 
         //TODO  assign permission to $user
@@ -40,6 +60,29 @@ class TaskControllerTest extends TestCase
         $this->assertEquals($task->name, $result->name);
         $this->assertEquals($task->completed, (boolean)$result->completed);
     }
+    public function  superadmin_can_show_a_task()
+    {
+
+        $user = $this->login($this,'api');
+        $user->admin = true;
+        $user->save();
+        //TODO  assign permission to $user
+
+        //Gate::define('task.store');
+        // Task:create()
+        $task = factory(Task::class)->create();
+
+
+        $response = $this->json('GET', '/api/v1/tasks/' . $task->id);
+
+        $result = json_decode($response->getContent());
+        $response->assertSuccessful();
+        $this->assertEquals($task->name, $result->name);
+        $this->assertEquals($task->completed, (boolean)$result->completed);
+    }
+
+
+
 
     /**
      * @test
@@ -168,5 +211,7 @@ class TaskControllerTest extends TestCase
         $this->assertFalse((boolean)$newTask->completed);
 
     }
+
+
 
 }

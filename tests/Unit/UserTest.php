@@ -71,4 +71,17 @@ class UserTest extends TestCase
         $this->assertEmpty($tasks);
     }
 
+
+    public function isSuperAdmin(){
+
+        $user= factory(User::class)->create();
+        dd($user->admin);
+        $this->assertFalse($user->isSuperAdmin);
+        $user->admin = true;
+        $user->save();
+        $this->assertTrue($user->isSuperAdmin());
+
+    }
+
+
 }

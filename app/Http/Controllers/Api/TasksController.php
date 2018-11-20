@@ -21,6 +21,9 @@ class TasksController extends Controller
         return $task->map();
     }
 
+
+
+
     public function destroy(Request $request, Task $task)
     {
         $task->delete();
