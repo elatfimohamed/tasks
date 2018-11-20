@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import Vuelidate from 'vuelidate'
-Vue.use(Vuelidate)
 
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
@@ -12,6 +11,9 @@ import Tasks from './components/Tasks.vue'
 import Tasques from './components/Tasques.vue'
 import LoginForm from './components/LoginForm.vue'
 import RegisterForm from './components/RegisterForm.vue'
+import UserList from './components/UserList'
+import UserSelect from './components/UserSelect'
+Vue.use(Vuelidate)
 
 window.Vue = Vue
 window.Vue.use(Vuetify)
@@ -21,7 +23,8 @@ window.Vue.component('tasks', Tasks)
 window.Vue.component('tasques', Tasques)
 window.Vue.component('login-form', LoginForm)
 window.Vue.component('register-form', RegisterForm)
-
+window.Vue.component('user-list', UserList)
+window.Vue.component('user-Select', UserSelect)
 
 // eslint-disable-next-line no-unused-vars
 const app = new window.Vue(AppComponent)

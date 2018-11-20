@@ -22,11 +22,10 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::view('/calendari', 'calendari');
-    Route::view('/contact', 'contact');
 
     Route::get('/tasks_vue', 'TasksVueController@index');
     Route::get('/tasques', 'TasquesController@index');
-    Route::get('/home', 'TasksVueController@index');
+    Route::get('/home', 'TasquesController@index');
 
     // Propies
     Route::post('/taskscompleted/{task}', 'TasksCompletedController@store');
@@ -35,11 +34,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', 'TasksController@index');
     // User tasks
     Route::get('/user/tasks', 'LoggedUserTasksController@index');
+
     Route::impersonate();
 });
 
 Route::post('/login_alt', 'Auth\LoginAltController@login');
 Route::post('/register_alt', 'Auth\RegisterAltController@store');
+
 
 Route::get('/', function () {
     return view('welcome');

@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-
 class User extends Authenticatable
 {
     use HasRoles,Notifiable, HasApiTokens;
@@ -41,9 +40,35 @@ class User extends Authenticatable
         $this->tasks()->save($task);
     }
 
-    public function isSuperAdmin(){
+    public function addTasks($tasks)
+    {
+        $this->tasks()->saveMany($tasks);
+    }
 
+    /**
+     * @return mixed
+     */
+    public function isSuperAdmin()
+    {
         return $this->admin;
     }
 
+    public function map()
+    {
+        return [
+            'name' => $this->name,
+            'email' => $this->email,
+            'avatar' => $this->avatar
+        ];
+    }
+
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
+    public function getAvatarAttribute()
+    {
+        return 'https://www.gravatar.com/avatar/' . md5($this->email);
+    }
 }
