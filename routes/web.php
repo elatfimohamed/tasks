@@ -22,10 +22,12 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::view('/calendari', 'calendari');
+    Route::view('/contact', 'contact');
 
     Route::get('/tasks_vue', 'TasksVueController@index');
     Route::get('/tasques', 'TasquesController@index');
     Route::get('/home', 'TasquesController@index');
+
 
     // Propies
     Route::post('/taskscompleted/{task}', 'TasksCompletedController@store');
