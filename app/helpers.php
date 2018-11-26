@@ -2,7 +2,9 @@
 
 use App\Task;
 use App\User;
-use Spatie\Permission\Contracts\Role;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+
 
 if (!function_exists('create_primary_user')) {
     function create_primary_user()
@@ -11,10 +13,12 @@ if (!function_exists('create_primary_user')) {
         if (!$user) {
            $user = User::firstOrCreate([
                 'name' => 'mohamed elatfi',
-                'email' => 'mohamedatfi@iesebre.com',
+                'email' => 'mohamedelatfi@iesebre.com',
                 'password' => bcrypt(env('PRIMARY_USER_PASSWORD', '977580262'))
 
             ]);
+            $user->assignRole('TasksManager');
+            $user->assignRole('Tasks');
             $user->admin = true;
             $user->save();
         }
@@ -123,7 +127,7 @@ if (!function_exists('initialize_roles')) {
         // Crear roles
         try {
             $taskManager = Role::create([
-                'name' => 'TaskManager'
+                'name' => 'TasksManager'
             ]);
         } catch(Exception $e) {
 
@@ -283,3 +287,9 @@ if (!function_exists('map_collection')) {
         });
     }
 }
+if (!function_exists('logged_user')) {
+    function logged_user() {
+        return json_encode(optional(Auth::user())->map());
+    }
+}
+

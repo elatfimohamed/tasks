@@ -149,21 +149,33 @@
                 <template slot="items" slot-scope="{item: task}">
                     <tr>
                         <td>{{ task.id }}</td>
-                        <td v-text="task.name"></td>
-                        <td v-text="task.user_id"></td>
-                        <td v-text="task.completed ? 'Completada' : 'Pendent'"></td>
-                        <td v-text="task.created_at"></td>
-                        <td v-text="task.updated_at"></td>
+                        <td>
+                            <span :title="task.description">{{ task.name }}</span>
+                        </td>
+                        <td>
+                            <v-avatar :title="task.user_name">
+                                <img :src="task.user_gravatar" alt="avatar">
+                            </v-avatar>
+                        </td>
+                        <td>
+                          <v-switch v-model="completed" :label="completed ? 'Completada' : 'Pendent'"></v-switch>
+                        </td>
+                        <td>
+                            <span :title="task.created_at_formatted">{{ task.created_at_human}}</span>
+                        </td>
+                        <td>
+                            <span :title="task.updated_at_formatted">{{ task.updated_at_human}}</span>
+                        </td>
                         <td>
                             <v-btn icon color="primary" flat title="Mostrar la tasca"
                                    @click="show(task)">
                                 <v-icon>visibility</v-icon>
                             </v-btn>
-                            <v-btn icon color="success" flat title="Canviar la tasca"
+                            <v-btn v-can="tasks.update" icon color="success" flat title="Canviar la tasca"
                                    @click="showUpdate(task)">
                                 <v-icon>edit</v-icon>
                             </v-btn>
-                            <v-btn icon color="error" flat title="Eliminar la tasca"
+                            <v-btn v-can="tasks.destroy" icon color="error" flat title="Eliminar la tasca"
                                    @click="showDestroy(task)">
                                 <v-icon>delete</v-icon>
                             </v-btn>
@@ -261,9 +273,9 @@ export default {
         { text: 'Name', value: 'name' },
         { text: 'User', value: 'user_id' },
         { text: 'Completat', value: 'completed' },
-        { text: 'Creat', value: 'created_at' },
-        { text: 'Modificat', value: 'updated_at' },
-        { text: 'Accions', sortable: false }
+        { text: 'Creat', value: 'created_at_timestamp' },
+        { text: 'Modificat', value: 'updated_at_timestamp' },
+        { text: 'Accions', sortable: false, value: 'full_search' }
       ]
     }
   },

@@ -26625,7 +26625,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(21);
-module.exports = __webpack_require__(117);
+module.exports = __webpack_require__(118);
 
 
 /***/ }),
@@ -26662,6 +26662,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_UserList___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_UserList__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_UserSelect__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_UserSelect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_UserSelect__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__plugins_permissions__ = __webpack_require__(117);
+
 
 
 
@@ -26681,6 +26683,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuel
 
 window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
 window.Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
+window.Vue.user(__WEBPACK_IMPORTED_MODULE_14__plugins_permissions__["a" /* default */]);
 
 window.Vue.component('example-component', __WEBPACK_IMPORTED_MODULE_7__components_ExampleComponent_vue___default.a);
 window.Vue.component('tasks', __WEBPACK_IMPORTED_MODULE_8__components_Tasks_vue___default.a);
@@ -50170,6 +50173,15 @@ if (token) {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+var user = document.head.querySelector('meta[name="user"]');
+
+if (user) {
+  // TODO espai de noms
+  window.laravel_user = JSON.parse(user.content);
+} else {
+  console.error('CAUTION: user not found at HTML!');
+}
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -72217,9 +72229,39 @@ module.exports = Component.exports
 
 /***/ }),
 /* 60 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: Unexpected token, expected ; (28:27)\n\n\u001b[0m \u001b[90m 26 | \u001b[39m\n \u001b[90m 27 | \u001b[39m    methods () {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 28 | \u001b[39m        impersonate (user) {\n \u001b[90m    | \u001b[39m                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 29 | \u001b[39m            console\u001b[33m.\u001b[39mlog(\u001b[32m'IMPERSONATE'\u001b[39m)\n \u001b[90m 30 | \u001b[39m            console\u001b[33m.\u001b[39mlog(\u001b[32m'user:'\u001b[39m)\n \u001b[90m 31 | \u001b[39m            console\u001b[33m.\u001b[39mlog(user)\u001b[0m\n");
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  el: '#app',
+  name: 'App',
+  data: function data() {
+    return {
+      drawer: null,
+      items: [{ icon: 'home', text: 'Welcome', url: '/' }, {
+        icon: 'keyboard_arrow_up',
+        'icon-alt': 'keyboard_arrow_down',
+        text: 'Tasques',
+        model: true,
+        children: [{ icon: 'assignment', text: 'Tasques_PHP', url: '/tasks' }, { icon: 'assignment', text: 'Tasques_Tailwind', url: 'tasks_vue' }, { icon: 'assignment', text: 'Tasques', url: 'tasques' }]
+      }, { icon: 'account_box', text: 'Sobre mi', url: '/about' }, { icon: 'help', text: 'Contacte', url: '/contact' }, { icon: 'date_range', text: 'Calendari', url: '/calendari' }]
+    };
+  },
+  methods: {
+    impersonate: function impersonate(user) {
+      console.log('IMPERSONATE');
+      console.log('user:');
+      console.log(user);
+      if (user) {
+        window.location.href = '/impersonate/take/' + user;
+      } else {
+        console.log('CACA');
+      }
+    }
+  }
+});
 
 /***/ }),
 /* 61 */
@@ -74077,6 +74119,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Tasques',
@@ -74198,6 +74244,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // SHOW SNACKBAR ERROR TODO
       });
     }
+  },
+  created: function created() {
+    console.log('Usuari logat:');
+    console.log();
   }
 });
 
@@ -74782,6 +74832,14 @@ var render = function() {
                             _c(
                               "v-btn",
                               {
+                                directives: [
+                                  {
+                                    name: "can",
+                                    rawName: "v-can",
+                                    value: task.destroy,
+                                    expression: "task.destroy"
+                                  }
+                                ],
                                 attrs: {
                                   icon: "",
                                   color: "error",
@@ -74796,7 +74854,28 @@ var render = function() {
                               },
                               [_c("v-icon", [_vm._v("delete")])],
                               1
-                            )
+                            ),
+                            _vm._v(" "),
+                            _vm.$can("")
+                              ? _c(
+                                  "v-btn",
+                                  {
+                                    attrs: {
+                                      icon: "",
+                                      color: "error",
+                                      flat: "",
+                                      title: "Eliminar la tasca"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.showDestroy(task)
+                                      }
+                                    }
+                                  },
+                                  [_c("v-icon", [_vm._v("delete")])],
+                                  1
+                                )
+                              : _vm._e()
                           ],
                           1
                         )
@@ -76465,6 +76544,98 @@ if (false) {
 
 /***/ }),
 /* 117 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var disappear = function disappear(el, modifiers) {
+  var hidden = modifiers && modifiers.hidden;
+  var disabled = modifiers && modifiers.disabled;
+  if (hidden) {
+    el.firstElementChild.style.display = 'none';
+    return true;
+  }
+  if (disabled) {
+    el.firstElementChild.disabled = true;
+    return true;
+  }
+  // el.innerHTML = ''
+  el.remove();
+};
+
+var haveRole = function haveRole(role) {
+  if (role == null) return true;
+  if (window.laravel_user && window.laravel_user) return true;
+  var userRoles = window.laravel_user && window.laravel_user;
+  if (userRoles) {
+    if (userRoles.indexOf(role) === -1) return false;else return true;
+  }
+  return false;
+};
+
+var hasRole = function hasRole(role) {
+  return haveRole(role);
+};
+
+var can = function can(permission) {
+  var resource = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+  var user = window.laravel_user;
+  if (user && user.isSuperAdmin) return true;
+  var userPermissions = user && user.permissions;
+
+  if (resource instanceof Object) {
+    if (user.id === resource.user_id) {
+      return true;
+    }
+  }
+  if (userPermissions) {
+    if (userPermissions.indexOf(permission) === -1) return false;
+    return true;
+  } else return false;
+};
+
+var cannot = function cannot(permission) {
+  var resource = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+  return !can(permission, resource);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  install: function install(Vue, options) {
+    // <delete-task-button v-can:delete="task"></delete-task-icon>
+    // <delete-task-button v-can="delete.task"></delete-task-icon>
+    // <delete-task-button v-can.disabled="delete.task"></delete-task-icon>
+    // <delete-task-button v-can.hidden="delete.task"></delete-task-icon>
+
+    Vue.directive('can', {
+      bind: function bind(el, binding, vnode, oldVnode) {
+        var action = binding.arg;
+        var resource = binding.value;
+        var permission = void 0;
+        if (resource instanceof Object) permission = binding.expression + '.' + action;else {
+          if (binding.value === null) return true;
+          permission = binding.value || binding.expression;
+        }
+        if (!can(permission, resource)) disappear(el, binding.modifiers);
+      }
+    });
+    Vue.directive('role', {
+      bind: function bind(el, binding, vnode, oldVnode) {
+        if (binding.value === null) return true;
+        var role = binding.value || binding.expression;
+        if (!haveRole(role)) disappear(el, binding.modifiers);
+      }
+    });
+    // If authorID id is equal to current userId permission is always granted
+    Vue.prototype.$can = can;
+    Vue.prototype.$cannot = cannot;
+    Vue.prototype.$haveRole = haveRole;
+    Vue.prototype.$hasRole = hasRole;
+  }
+});
+
+/***/ }),
+/* 118 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

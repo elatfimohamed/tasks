@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\DestroyTask;
 use App\Http\Requests\StoreTask;
 use App\Http\Requests\UpdateTask;
 use App\Task;
@@ -24,7 +25,7 @@ class TasksController extends Controller
 
 
 
-    public function destroy(Request $request, Task $task)
+    public function destroy(DestroyTask $request, Task $task)
     {
         $task->delete();
     }

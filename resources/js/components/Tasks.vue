@@ -67,107 +67,107 @@
 
 <script>
 
-import EditableText from './EditableText'
-import VListTile from 'vuetify/lib/components/VList/VListTile'
+    import EditableText from './EditableText'
+    import VListTile from 'vuetify/lib/components/VList/VListTile'
 
-var filters = {
-  all: function (tasks) {
-    return tasks
-  },
-  completed: function (tasks) {
-    return tasks.filter(function (task) {
-      // return task.completed
-      // NO CAL
-      if (task.completed === '1') return true
-      else return false
-    })
-  },
-  active: function (tasks) {
-    return tasks.filter(function (task) {
-      // return !task.completed
-      if (task.completed === '0') return true
-      else return false
-    })
-  }
-}
+    var filters = {
+        all: function (tasks) {
+            return tasks
+        },
+        completed: function (tasks) {
+            return tasks.filter(function (task) {
+                // return task.completed
+                // NO CAL
+                if (task.completed === '1') return true
+                else return false
+            })
+        },
+        active: function (tasks) {
+            return tasks.filter(function (task) {
+                // return !task.completed
+                if (task.completed === '0') return true
+                else return false
+            })
+        }
+    }
 
-export default {
-  name: 'Tasks',
-  components: {
-    VListTile,
-    'editable-text': EditableText
-  },
-  data () {
-    return {
-      filter: 'all', // All Completed Active
-      newTask: '',
-      dataTasks: this.tasks,
-      errorMessage: null
-    }
-  },
-  props: {
-    tasks: {
-      type: Array,
-      default: function () {
-        return []
-      }
-    }
-  },
-  computed: {
-    total () {
-      return this.dataTasks.length
-    },
-    filteredTasks () {
-      // Segons el filtre actiu
-      // Alternativa switch/case -> array associatiu
-      return filters[this.filter](this.dataTasks)
-    }
-  },
-  watch: {
-    tasks (newTasks) {
-      this.dataTasks = newTasks
-    }
-  },
+    export default {
+        name: 'Tasks',
+        components: {
+            VListTile,
+            'editable-text': EditableText
+        },
+        data () {
+            return {
+                filter: 'all', // All Completed Active
+                newTask: '',
+                dataTasks: this.tasks,
+                errorMessage: null
+            }
+        },
+        props: {
+            tasks: {
+                type: Array,
+                default: function () {
+                    return []
+                }
+            }
+        },
+        computed: {
+            total () {
+                return this.dataTasks.length
+            },
+            filteredTasks () {
+                // Segons el filtre actiu
+                // Alternativa switch/case -> array associatiu
+                return filters[this.filter](this.dataTasks)
+            }
+        },
+        watch: {
+            tasks (newTasks) {
+                this.dataTasks = newTasks
+            }
+        },
 
-  methods: {
-    editName (task, text) {
-      task.name = text
-    },
-    setFilter (newFilter) {
-      this.filter = newFilter
-    },
-    add () {
-      if (this.newTask === '') return
-      window.axios.post('/api/v1/tasks', {
-        name: this.newTask
-      }).then((response) => {
-        this.dataTasks.splice(0, 0, { id: response.data.id, name: this.newTask, completed: false })
-        this.newTask = ''
-      }).catch((error) => {
-        console.log(error)
-      })
-    },
-    remove (task) {
-      // this.dataTasks.splice(this.dataTasks.indexOf(task), 1)
-      window.axios.delete('/api/v1/tasks/' + task.id).then((response) => {
-        this.dataTasks.splice(this.dataTasks.indexOf(task), 1)
-      }).catch((error) => {
-        console.log(error)
-      })
+        methods: {
+            editName (task, text) {
+                task.name = text
+            },
+            setFilter (newFilter) {
+                this.filter = newFilter
+            },
+            add () {
+                if (this.newTask === '') return
+                window.axios.post('/api/v1/tasks', {
+                    name: this.newTask
+                }).then((response) => {
+                    this.dataTasks.splice(0, 0, { id: response.data.id, name: this.newTask, completed: false })
+                    this.newTask = ''
+                }).catch((error) => {
+                    console.log(error)
+                })
+            },
+            remove (task) {
+                // this.dataTasks.splice(this.dataTasks.indexOf(task), 1)
+                window.axios.delete('/api/v1/tasks/' + task.id).then((response) => {
+                    this.dataTasks.splice(this.dataTasks.indexOf(task), 1)
+                }).catch((error) => {
+                    console.log(error)
+                })
+            }
+        },
+        created () {
+            // Si tinc propietat tasks no fer res
+            // sino vull fer petició a la API per obtenir les tasques
+            if (this.tasks.length === 0) {
+                window.axios.get('/api/v1/tasks').then((response) => {
+                    this.dataTasks = response.data
+                }).catch((error) => {
+                    this.errorMessage = error.response.data
+                })
+            }
+        }
     }
-  },
-  created () {
-    // Si tinc propietat tasks no fer res
-    // sino vull fer petició a la API per obtenir les tasques
-    if (this.tasks.length === 0) {
-      window.axios.get('/api/v1/tasks').then((response) => {
-        this.dataTasks = response.data
-      }).catch((error) => {
-        this.errorMessage = error.response.data
-      })
-    }
-  }
-}
 </script>
 
 <style>

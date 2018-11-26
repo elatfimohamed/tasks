@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="user" content="{{ logged_user() }}">
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
     <title>@yield('title','Tasques')</title>
 </head>
@@ -109,7 +110,7 @@
                     @endImpersonating
                     <v-flex xs12>
                         @canImpersonate
-                        <user-select @selected="impersonate" url="/api/v1/users"></user-select>
+                        <user-select label="Entrar com..." @selected="impersonate" url="/api/v1/regular_users"></user-select>
                         @endCanImpersonate
                         @impersonating
                         {{ Auth::user()->impersonatedBy()->name }} està suplantant {{ Auth::user()->name }}

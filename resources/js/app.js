@@ -13,10 +13,12 @@ import LoginForm from './components/LoginForm.vue'
 import RegisterForm from './components/RegisterForm.vue'
 import UserList from './components/UserList'
 import UserSelect from './components/UserSelect'
+import permissions from './plugins/permissions'
 Vue.use(Vuelidate)
 
 window.Vue = Vue
 window.Vue.use(Vuetify)
+window.Vue.use(permissions)
 
 window.Vue.component('example-component', ExampleComponent)
 window.Vue.component('tasks', Tasks)
@@ -24,7 +26,7 @@ window.Vue.component('tasques', Tasques)
 window.Vue.component('login-form', LoginForm)
 window.Vue.component('register-form', RegisterForm)
 window.Vue.component('user-list', UserList)
-window.Vue.component('user-Select', UserSelect)
+window.Vue.component('user-select', UserSelect)
 
 // eslint-disable-next-line no-unused-vars
 const app = new window.Vue(AppComponent)

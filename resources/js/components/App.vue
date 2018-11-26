@@ -4,6 +4,7 @@ export default {
   name: 'App',
   data: () => ({
     drawer: null,
+    drawerRight: null,
     items: [
       { icon: 'home', text: 'Welcome', url: '/' },
       {
