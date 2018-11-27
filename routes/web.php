@@ -29,7 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', 'TasquesController@index');
 
 
-    // Propies
+    // Fetes_propies
     Route::post('/taskscompleted/{task}', 'TasksCompletedController@store');
     Route::delete('/taskscompleted/{task}', 'TasksCompletedController@destroy');
     Route::get('/tasks', 'TasksController@index');
@@ -38,6 +38,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/tasks', 'LoggedUserTasksController@index');
 
     Route::impersonate();
+
+
+    //TAGS
+
+    Route::get('/tags','TagsController@index');
 });
 
 Route::post('/login_alt', 'Auth\LoginAltController@login');

@@ -9,9 +9,13 @@
     <meta name="user" content="{{ logged_user() }}">
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
     <title>@yield('title','Tasques')</title>
+    <style>
+        [v-cloak] { display: none }
+
+    </style>
 </head>
 <body>
-<div id="app">
+<div id="app" v-cloak>
     <v-app>
         <v-navigation-drawer
                 v-model="drawer"
