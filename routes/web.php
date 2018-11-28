@@ -9,6 +9,8 @@ Auth::routes();
 
 // MIDDLEWARE
 
+
+
 // GRUP DE URLS PER USUARIS AUTENTICATS
 
 Route::middleware(['auth'])->group(function () {

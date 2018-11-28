@@ -50,6 +50,7 @@ if (!function_exists('create_example_tags')) {
 
 if (!function_exists('create_example_tasks')) {
     function create_example_tasks() {
+        //$user1= factory(User::class)
         Task::create([
             'name' => 'comprar pa',
             'completed' => false,
