@@ -25,7 +25,6 @@ if (!function_exists('create_primary_user')) {
     }
 }
 
-
 if (!function_exists('create_example_tags')) {
     function create_example_tags() {
         Tag::create([
@@ -50,26 +49,48 @@ if (!function_exists('create_example_tags')) {
 
 if (!function_exists('create_example_tasks')) {
     function create_example_tasks() {
-        //$user1= factory(User::class)
+        $user1= factory(User::class)->create();
         Task::create([
             'name' => 'comprar pa',
             'completed' => false,
             'description' => 'Bla bla bla',
-            'user_id' => 1
+            'user_id' => $user1->id
         ]);
 
         Task::create([
             'name' => 'comprar llet',
             'completed' => false,
             'description' => 'Bla bla bla',
-            'user_id' => 1
+            'user_id' => $user1->id
         ]);
 
         Task::create([
             'name' => 'Estudiar PHP',
             'completed' => true,
+            'description' => 'JORL JORL JORL',
+            'user_id' => $user1->id
+        ]);
+
+        $user1= factory(User::class)->create();
+        Task::create([
+            'name' => 'comprar pa',
+            'completed' => false,
             'description' => 'Bla bla bla',
-            'user_id' => 1
+            'user_id' => $user1->id
+        ]);
+
+        Task::create([
+            'name' => 'comprar llet',
+            'completed' => false,
+            'description' => 'Bla bla bla',
+            'user_id' => $user1->id
+        ]);
+
+        Task::create([
+            'name' => 'Estudiar PHP',
+            'completed' => true,
+            'description' => 'JORL JORL JORL',
+            'user_id' => $user1->id
         ]);
     }
 }
@@ -123,124 +144,121 @@ if (!function_exists('create_database')) {
     }
 }
 
-if (!function_exists('initialize_roles')) {
-    function initialize_roles() {
-        // Crear roles
+if (!function_exists('create_role')) {
+    function create_role($role)
+    {
         try {
-            $taskManager = Role::create([
-                'name' => 'TasksManager'
+            return Role::create([
+                'name' => $role
             ]);
         } catch(Exception $e) {
-
-        }
-
-        try {
-            $tasks = Role::create([
-                'name' => 'Tasks'
-            ]);
-        } catch(Exception $e) {
-
-        }
-
-
-        // Crear permisos
-
-        // CRUD de tasques
-        try {
-            Permission::create([
-                'name' => 'tasks.index'
-            ]);
-            //
-//        Gate::define('tasks.index', function ($user) {
-//            return $user->hasPermission('tasks.index');
-//        });
-
-            Permission::create([
-                'name' => 'tasks.show'
-            ]);
-            Permission::create([
-                'name' => 'tasks.store'
-            ]);
-            Permission::create([
-                'name' => 'tasks.update'
-            ]);
-            Permission::create([
-                'name' => 'tasks.complete'
-            ]);
-            Permission::create([
-                'name' => 'tasks.uncomplete'
-            ]);
-            Permission::create([
-                'name' => 'tasks.destroy'
-            ]);
-        }  catch(Exception $e) {
-
-        }
-
-        try {
-            // Assignar permissos a TaskManager
-            $taskManager->givePermissionTo('tasks.index');
-            $taskManager->givePermissionTo('tasks.show');
-            $taskManager->givePermissionTo('tasks.store');
-            $taskManager->givePermissionTo('tasks.update');
-            $taskManager->givePermissionTo('tasks.complete');
-            $taskManager->givePermissionTo('tasks.uncomplete');
-            $taskManager->givePermissionTo('tasks.destroy');
-        } catch(Exception $e) {
-
-        }
-
-        try {
-            // CRUD TASQUES D'UN USUARI
-            Permission::create([
-                'name' => 'user.tasks.index'
-            ]);
-            Permission::create([
-                'name' => 'user.tasks.show'
-            ]);
-            Permission::create([
-                'name' => 'user.tasks.store'
-            ]);
-            Permission::create([
-                'name' => 'user.tasks.update'
-            ]);
-            Permission::create([
-                'name' => 'user.tasks.complete'
-            ]);
-            Permission::create([
-                'name' => 'user.tasks.uncomplete'
-            ]);
-//        //
-//        Gate::define('user.tasks.update', function ($user) {
-//            return $user->hasPermission('user.tasks.update');
-//        });
-//
-//        Gate::define('user.tasks.update', function ($user, $task) {
-//            return $user->id === $task->user_id;
-//        });
-            Permission::create([
-                'name' => 'user.tasks.destroy'
-            ]);
-        } catch (Exception $e) {
-
-        }
-
-
-        try {
-            $tasks->givePermissionTo('user.tasks.index');
-            $tasks->givePermissionTo('user.tasks.show');
-            $tasks->givePermissionTo('user.tasks.store');
-            $tasks->givePermissionTo('user.tasks.update');
-            $tasks->givePermissionTo('user.tasks.complete');
-            $tasks->givePermissionTo('user.tasks.uncomplete');
-            $tasks->givePermissionTo('user.tasks.destroy');
-        } catch(Exception $e) {
-
+            return Role::findByName($role);
         }
     }
 }
-if (!function_exists('sample_users')) {
-    function sample_users() {
+
+if (!function_exists('create_permission')) {
+    function create_permission($permission)
+    {
+        try {
+            return Permission::create([
+                'name' => $permission
+            ]);
+        } catch(Exception $e) {
+            return Permission::findByName($permission);
+        }
+    }
+}
+
+if (!function_exists('initialize_gates')) {
+    function initialize_gates()
+    {
+        Gate::define('tasks.manage',function($user) {
+            return $user->isSuperAdmin() || $user->hasRole('TaskManager');
+        });
+    }
+}
+
+if (!function_exists('initialize_roles')) {
+    function initialize_roles() {
+        $roles = [
+            'TaskManager',
+            'Tasks',
+            'TagsManager',
+            'Tags'
+        ];
+
+        foreach ($roles as $role) {
+            create_role($role);
+        }
+
+        $taskManagerPermissions = [
+            'tasks.index',
+            'tasks.show',
+            'tasks.store',
+            'tasks.update',
+            'tasks.complete',
+            'tasks.uncomplete',
+            'tasks.destroy'
+        ];
+
+        $tagsManagerPermissions = [
+            'tags.index',
+            'tags.show',
+            'tags.store',
+            'tags.update',
+            'tags.complete',
+            'tags.uncomplete',
+            'tags.destroy'
+        ];
+
+        // user.tasks Who:
+        // Logged->user === Task->user_id &&
+        // També ha de tenir Rol Tasks
+        $userTaskPermissions = [
+            'user.tasks.index',
+            'user.tasks.show',
+            'user.tasks.store',
+            'user.tasks.update',
+            'user.tasks.complete',
+            'user.tasks.uncomplete',
+            'user.tasks.destroy'
+        ];
+
+        $userTagsPermissions = [
+            'user.tags.index',
+            'user.tags.show',
+            'user.tags.store',
+            'user.tags.update',
+            'user.tags.complete',
+            'user.tags.uncomplete',
+            'user.tags.destroy'
+        ];
+
+        $permissions = array_merge($taskManagerPermissions, $userTaskPermissions, $tagsManagerPermissions, $userTagsPermissions);
+
+        foreach ($permissions as $permission) {
+            create_permission($permission);
+        }
+
+        $rolePermissions = [
+            'TaskManager' => $taskManagerPermissions,
+            'Tasks' => $userTaskPermissions,
+            'TagsManager' => $tagsManagerPermissions,
+            'Tags' => $userTagsPermissions,
+        ];
+
+        foreach ($rolePermissions as $role => $rolePermission) {
+            $role = Role::findByName($role);
+            foreach ($rolePermission as $permission) {
+                $role->givePermissionTo($permission);
+            }
+        }
+    }
+}
+
+if (!function_exists('sample_users_and_tasks')) {
+    function sample_users_and_tasks() {
         // Superadmin no cal -> soc jo mateix
 
         // Pepe Pringao -> No té cap permis ni cap rol
@@ -259,6 +277,20 @@ if (!function_exists('sample_users')) {
             ]);
         } catch (Exception $e) {}
 
+        Task::create([
+            'name' => 'Patinar pels carrers',
+            'completed' => false,
+            'description' => 'Bla bla bla',
+            'user_id' => $bartsimpson->id
+        ]);
+
+        Task::create([
+            'name' => 'Escriure 100 vegades no...',
+            'completed' => false,
+            'description' => 'Bla bla bla',
+            'user_id' => $bartsimpson->id
+        ]);
+
         try {
             $bartsimpson->assignRole('Tasks');
         } catch (Exception $e) {}
@@ -272,7 +304,26 @@ if (!function_exists('sample_users')) {
 
         try {
             $homersimpson->assignRole('TaskManager');
+            $homersimpson->assignRole('Tasks');
         } catch (Exception $e) {}
+
+        try {
+            $homersimpson->assignRole('Tasks');
+        } catch (Exception $e) {}
+
+        Task::create([
+            'name' => 'Anar a treballar a la central nuclear',
+            'completed' => false,
+            'description' => 'quin pal',
+            'user_id' => $homersimpson->id
+        ]);
+
+        Task::create([
+            'name' => 'Gestionar les tasques',
+            'completed' => false,
+            'description' => 'Hey you!',
+            'user_id' => $homersimpson->id
+        ]);
     }
 }
 
@@ -288,9 +339,10 @@ if (!function_exists('map_collection')) {
         });
     }
 }
+
 if (!function_exists('logged_user')) {
-    function logged_user() {
+    function logged_user()
+    {
         return json_encode(optional(Auth::user())->map());
     }
 }
-

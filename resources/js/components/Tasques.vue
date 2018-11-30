@@ -317,7 +317,6 @@ export default {
         this.removing = false
       })
     },
-
     // SNACKBAR
     showMessage (message) {
       this.snackbarMessage = message
@@ -330,7 +329,6 @@ export default {
       this.snackbar = true
     },
     // SNACKBAR END
-
     showCreate () {
       this.createDialog = true
     },

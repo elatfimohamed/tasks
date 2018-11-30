@@ -11,16 +11,15 @@ class TasquesController extends Controller
     public function index(UserTasquesIndex $request)
     {
 
-        if (Auth::user()->isSuperAdmin() || Auth::user()->hasRole('TasksManager')) {
-            $tasks = map_collection (Task::orderBy('created_at','desc')->get());
-        } else {
-        $tasks = map_collection ($request->user()->tasks);
+        if (Auth::user()->can('tasks.manage')){
+            $tasks = map_collection(Task::orderBy('created_at','desc') -> get());
+            $uri = 'api/v1/tasks';
+            $uri = 'api/v1/tasks/';
+        }else {
+            $tasks = map_collection($request->user()->tasks);
+            $uri = 'api/v1/user/tasks';
+            $uri = 'api/v1/user/tasks/';
         }
-
-
-        $tasks = map_collection (Task::orderBy('created_at','desc')->get());
-        $users = User::all();
-        return view('tasques',compact('tasks','users'));
     }
 
 }
