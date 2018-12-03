@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
@@ -34,12 +35,15 @@ class RegisterControllerTest extends TestCase
     {
 //        $this->withoutExceptionHandling();
         $this->assertNull(Auth::user());
-        //1
+        Mail::fake();
+
+        $response = $this->post();
+
 
         //2
         $response = $this->post('/register', [
-            'name' => 'Sergi',
-            'email' => 'sergibaucells@iesebre.com',
+            'name' => 'Mohamed',
+            'email' => 'mohamedelatfi93@gmail.com',
             'password' => 'secret',
             'password_confirmation' => 'secret'
         ]);
@@ -47,8 +51,8 @@ class RegisterControllerTest extends TestCase
         //3
         $response->assertStatus(302);
         $response->assertRedirect('/home');
-        $this->assertEquals('sergibaucells@iesebre.com', Auth::user()->email);
-        $this->assertEquals('Sergi', Auth::user()->name);
+        $this->assertEquals('mohamedelatfi93@gmail.com', Auth::user()->email);
+        $this->assertEquals('Mohamed', Auth::user()->name);
         $this->assertTrue(Hash::check('secret', Auth::user()->password));
         $this->assertNotNull(Auth::user());
 //        $this->assertDatabaseHas('users',['email' => 'sergibaucells@iesebre.com']);
