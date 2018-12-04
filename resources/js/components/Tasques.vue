@@ -304,18 +304,24 @@ export default {
       this.dataTasks.splice(this.dataTasks.indexOf(task), 1)
     },
     destroy () {
-      this.removing = true
-      window.axios.delete('/api/v1/user/tasks/' + this.taskBeingRemoved.id).then(() => {
-        // this.refresh() // Problema -> rendiment
-        this.removeTask(this.taskBeingRemoved)
-        this.deleteDialog = false
-        this.taskBeingRemoved = null
-        this.showMessage("S'ha esborrat correctament la tasca")
-        this.removing = false
-      }).catch(error => {
-        this.showError(error)
-        this.removing = false
-      })
+      let result = this.$confirm()
+      if (result) {
+
+
+        //  Ok tirem endavant
+      }
+      // this.removing = true
+      // window.axios.delete('/api/v1/user/tasks/' + this.taskBeingRemoved.id).then(() => {
+      //   // this.refresh() // Problema -> rendiment
+      //   this.removeTask(this.taskBeingRemoved)
+      //   this.deleteDialog = false
+      //   this.taskBeingRemoved = null
+      //   this.showMessage("S'ha esborrat correctament la tasca")
+      //   this.removing = false
+      // }).catch(error => {
+      //   this.showError(error)
+      //   this.removing = false
+      // })
     },
     // SNACKBAR
     showMessage (message) {

@@ -28,6 +28,6 @@ class TestTextEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.text.blade');
+        return $this->view('emails.text');
     }
 }

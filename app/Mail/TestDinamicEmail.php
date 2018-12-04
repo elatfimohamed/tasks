@@ -5,11 +5,11 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class TestDinamicEmail extends Mailable
 {
     use Queueable, SerializesModels;
+
     public $user;
 
     /**
@@ -29,6 +29,9 @@ class TestDinamicEmail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.dinamic');
+        return $this->markdown('emails.testdinamic');
+        //return $this->markdown('emails.test');
+
+
     }
 }

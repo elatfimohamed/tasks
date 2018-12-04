@@ -26639,7 +26639,7 @@ var EventBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(22);
-module.exports = __webpack_require__(123);
+module.exports = __webpack_require__(127);
 
 
 /***/ }),
@@ -26678,6 +26678,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_UserSelect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_UserSelect__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__plugins_permissions__ = __webpack_require__(118);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__plugins_snackbar__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__plugins_confirm__ = __webpack_require__(123);
+
 
 
 
@@ -26701,6 +26703,7 @@ window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
 window.Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
 window.Vue.use(__WEBPACK_IMPORTED_MODULE_14__plugins_permissions__["a" /* default */]);
 window.Vue.use(__WEBPACK_IMPORTED_MODULE_15__plugins_snackbar__["a" /* default */]);
+window.Vue.use(__WEBPACK_IMPORTED_MODULE_16__plugins_confirm__["a" /* default */]);
 
 window.Vue.component('example-component', __WEBPACK_IMPORTED_MODULE_7__components_ExampleComponent_vue___default.a);
 window.Vue.component('tasks', __WEBPACK_IMPORTED_MODULE_8__components_Tasks_vue___default.a);
@@ -73917,7 +73920,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-throw new Error("Cannot find module \"./TaskCompletedToggle\"");
 //
 //
 //
@@ -74145,15 +74147,20 @@ throw new Error("Cannot find module \"./TaskCompletedToggle\"");
 //
 //
 //
-
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Tasques',
-  components: {
-    'task-completed-toggle': __WEBPACK_IMPORTED_MODULE_0__TaskCompletedToggle___default.a
-  },
   data: function data() {
     return {
+      snackbarMessage: 'Prova',
+      snackbarTimeout: 3000,
+      snackbarColor: 'success',
+      snackbar: false,
       dataUsers: this.users,
       completed: false,
       name: '',
@@ -74187,21 +74194,8 @@ throw new Error("Cannot find module \"./TaskCompletedToggle\"");
     users: {
       type: Array,
       required: true
-    },
-    uri: {
-      type: String,
-      required: true
     }
   },
-  // watch: {
-  //   dataTasks: {
-  //     handler: function (dataTasks, oldDataTasks) {
-  //       console.log(dataTasks)
-  //       console.log('MERDA MASSA DIFICIL')
-  //     },
-  //     deep: true
-  //   }
-  // },
   methods: {
     showUpdate: function showUpdate() {
       this.editDialog = true;
@@ -74217,21 +74211,38 @@ throw new Error("Cannot find module \"./TaskCompletedToggle\"");
       this.dataTasks.splice(this.dataTasks.indexOf(task), 1);
     },
     destroy: function destroy() {
-      var _this = this;
+      var result = this.$confirm();
+      if (result) {}
 
-      this.removing = true;
-      window.axios.delete(this.uri + this.taskBeingRemoved.id).then(function () {
-        // this.refresh() // Problema -> rendiment
-        _this.removeTask(_this.taskBeingRemoved);
-        _this.deleteDialog = false;
-        _this.taskBeingRemoved = null;
-        _this.$snackbar.showMessage("S'ha esborrat correctament la tasca");
-        _this.removing = false;
-      }).catch(function (error) {
-        _this.$snackbar.showError(error.message);
-        _this.removing = false;
-      });
+      //  Ok tirem endavant
+
+      // this.removing = true
+      // window.axios.delete('/api/v1/user/tasks/' + this.taskBeingRemoved.id).then(() => {
+      //   // this.refresh() // Problema -> rendiment
+      //   this.removeTask(this.taskBeingRemoved)
+      //   this.deleteDialog = false
+      //   this.taskBeingRemoved = null
+      //   this.showMessage("S'ha esborrat correctament la tasca")
+      //   this.removing = false
+      // }).catch(error => {
+      //   this.showError(error)
+      //   this.removing = false
+      // })
     },
+
+    // SNACKBAR
+    showMessage: function showMessage(message) {
+      this.snackbarMessage = message;
+      this.snackbarColor = 'success';
+      this.snackbar = true;
+    },
+    showError: function showError(error) {
+      this.snackbarMessage = error.message;
+      this.snackbarColor = 'error';
+      this.snackbar = true;
+    },
+
+    // SNACKBAR END
     showCreate: function showCreate() {
       this.createDialog = true;
     },
@@ -74245,17 +74256,22 @@ throw new Error("Cannot find module \"./TaskCompletedToggle\"");
       console.log('TODO SHOW TASK ' + task.id);
     },
     refresh: function refresh() {
-      var _this2 = this;
+      var _this = this;
 
       this.loading = true;
-      window.axios.get(this.uri).then(function (response) {
+      // setTimeout(() => { this.loading = false }, 5000)
+      // OCO !! URL CANVIA SEGONS EL CAS!!! TODO
+      // window.axios.get('/api/v1/tasks').then().catch()
+      // USERS TASKS O TOTES LES TASQUES?
+      window.axios.get('/api/v1/user/tasks').then(function (response) {
         console.log(response.data);
-        _this2.dataTasks = response.data;
-        _this2.loading = false;
-        _this2.$snackbar.showMessage('Tasques actualitzades correctament');
+        // SHOW SNACKBAR MISSATGE OK: 'Les tasques s'han actualitzat correctament
+        _this.dataTasks = response.data;
+        _this.loading = false;
       }).catch(function (error) {
         console.log(error);
-        _this2.loading = false;
+        _this.loading = false;
+        // SHOW SNACKBAR ERROR TODO
       });
     }
   }
@@ -74562,6 +74578,36 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
+        "v-snackbar",
+        {
+          attrs: { timeout: _vm.snackbarTimeout, color: _vm.snackbarColor },
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [
+          _vm._v("\n        " + _vm._s(_vm.snackbarMessage) + "\n        "),
+          _c(
+            "v-btn",
+            {
+              attrs: { dark: "", flat: "" },
+              on: {
+                click: function($event) {
+                  _vm.snackbar = false
+                }
+              }
+            },
+            [_vm._v("Tancar")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "v-toolbar",
         { attrs: { color: "blue darken-3" } },
         [
@@ -74772,8 +74818,17 @@ var render = function() {
                         _c(
                           "td",
                           [
-                            _c("task-completed-toggle", {
-                              attrs: { task: task }
+                            _c("v-switch", {
+                              attrs: {
+                                label: _vm.completed ? "Completada" : "Pendent"
+                              },
+                              model: {
+                                value: _vm.completed,
+                                callback: function($$v) {
+                                  _vm.completed = $$v
+                                },
+                                expression: "completed"
+                              }
                             })
                           ],
                           1
@@ -74817,26 +74872,32 @@ var render = function() {
                               1
                             ),
                             _vm._v(" "),
-                            _vm.$can("tasks.update", task)
-                              ? _c(
-                                  "v-btn",
+                            _c(
+                              "v-btn",
+                              {
+                                directives: [
                                   {
-                                    attrs: {
-                                      icon: "",
-                                      color: "success",
-                                      flat: "",
-                                      title: "Canviar la tasca"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.showUpdate(task)
-                                      }
-                                    }
-                                  },
-                                  [_c("v-icon", [_vm._v("edit")])],
-                                  1
-                                )
-                              : _vm._e(),
+                                    name: "can",
+                                    rawName: "v-can",
+                                    value: _vm.tasks.update,
+                                    expression: "tasks.update"
+                                  }
+                                ],
+                                attrs: {
+                                  icon: "",
+                                  color: "success",
+                                  flat: "",
+                                  title: "Canviar la tasca"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.showUpdate(task)
+                                  }
+                                }
+                              },
+                              [_c("v-icon", [_vm._v("edit")])],
+                              1
+                            ),
                             _vm._v(" "),
                             _c(
                               "v-btn",
@@ -76803,6 +76864,265 @@ if (false) {
 
 /***/ }),
 /* 123 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Confirm_vue__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Confirm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Confirm_vue__);
+
+
+// Taken from https://github.com/yariksav/vuetify-confirm
+
+function Install(Vue, options) {
+  var property = options && options.property || '$confirm';
+  function createDialogCmp(options) {
+    return new Promise(function (resolve) {
+      var cmp = new Vue(Object.assign(__WEBPACK_IMPORTED_MODULE_0__Confirm_vue___default.a, {
+        destroyed: function destroyed(c) {
+          document.body.removeChild(cmp.$el);
+          resolve(cmp.value);
+        }
+      }));
+      Object.assign(cmp, Vue.prototype.$confirm.options || {}, options);
+      document.body.appendChild(cmp.$mount().$el);
+    });
+  }
+
+  function show(message) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    options.message = message;
+    return createDialogCmp(options);
+  }
+
+  Vue.prototype[property] = show;
+  Vue.prototype[property].options = options || {};
+}
+
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(Install);
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Install);
+
+/***/ }),
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(125)
+/* template */
+var __vue_template__ = __webpack_require__(126)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/plugins/confirm/Confirm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-d2479258", Component.options)
+  } else {
+    hotAPI.reload("data-v-d2479258", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 125 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    buttonTrueText: {
+      type: String,
+      default: 'Confirmar'
+    },
+    buttonFalseText: {
+      type: String,
+      default: 'Cancel·lar'
+    },
+    buttonTrueColor: {
+      type: String,
+      default: 'error'
+    },
+    buttonFalseColor: {
+      type: String,
+      default: 'success'
+    },
+    color: {
+      type: String,
+      default: 'warning'
+    },
+    icon: {
+      type: String,
+      default: 'warning'
+    },
+    message: {
+      type: String,
+      reqiured: true
+    },
+    title: {
+      type: String
+    },
+    width: {
+      type: Number,
+      default: 300
+    }
+  },
+  data: function data() {
+    return {
+      value: false
+    };
+  },
+
+  methods: {
+    choose: function choose(value) {
+      this.$emit('result', value);
+      this.value = value;
+      this.$destroy();
+    },
+    change: function change(res) {
+      this.$destroy();
+    }
+  }
+});
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-dialog",
+    {
+      attrs: { value: "true", "max-width": _vm.width },
+      on: { input: _vm.change }
+    },
+    [
+      !!_vm.title
+        ? _c(
+            "v-toolbar",
+            { attrs: { dark: "", color: _vm.color, dense: "" } },
+            [
+              !!_vm.icon ? _c("v-icon", [_vm._v(_vm._s(_vm.icon))]) : _vm._e(),
+              _vm._v(" "),
+              _c("v-toolbar-title", {
+                staticClass: "white--text",
+                domProps: { textContent: _vm._s(_vm.title) }
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { attrs: { tile: "" } },
+        [
+          _c("v-card-text", { domProps: { innerHTML: _vm._s(_vm.message) } }),
+          _vm._v(" "),
+          _c(
+            "v-card-actions",
+            [
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: _vm.buttonFalseColor, flat: "" },
+                  on: {
+                    click: function($event) {
+                      _vm.choose(false)
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(_vm.buttonFalseText))]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: _vm.buttonTrueColor, flat: "" },
+                  on: {
+                    click: function($event) {
+                      _vm.choose(true)
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(_vm.buttonTrueText))]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-d2479258", module.exports)
+  }
+}
+
+/***/ }),
+/* 127 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

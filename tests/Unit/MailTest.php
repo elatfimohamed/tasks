@@ -11,12 +11,16 @@ use Tests\TestCase;
 
 class MailTest extends TestCase {
 
+  //  use RefreshDatabase;
+
     /**
      * @test
      */
     public function send_markdown_email()
     {
+        dump(env('MAIL_DRIVER'));
         $user = factory(User::class)->create();
+
 
         Mail::to($user)->send(new TestEmail());
         $this->assertTrue(true);
@@ -25,29 +29,26 @@ class MailTest extends TestCase {
     /**
      * @test
      */
-    public function send_email()
+    public function send_markdown_email_dinamic()
     {
-        // 1
+        dump(env('MAIL_DRIVER'));
         $user = factory(User::class)->create();
 
-        // 2
-        Mail::to($user)->send(new TestTextEmail());
-        $this->assertTrue(true);
 
+        Mail::to($user)->send(new TestDinamicEmail($user));
+        $this->assertTrue(true);
     }
+
     /**
      * @test
      */
-    public function send_markdown_dinamic_email()
+    public function send_test_email()
     {
-        // 1
+        dump(env('MAIL_DRIVER'));
         $user = factory(User::class)->create();
 
-        // 2
-        Mail::to($user)->send(new TestDinamicEmail($user));
+
+        Mail::to($user)->send(new TestTextEmail());
         $this->assertTrue(true);
-
-
-
     }
 }
