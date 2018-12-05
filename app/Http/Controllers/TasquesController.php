@@ -4,7 +4,6 @@ use App\Http\Requests\UserTasksIndex;
 use App\Http\Requests\UserTasquesIndex;
 use App\Task;
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TasquesController extends Controller

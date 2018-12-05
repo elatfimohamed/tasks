@@ -15,8 +15,8 @@ const disappear = (el, modifiers) => {
 
 const haveRole = (role) => {
   if (role == null) return true
-  if (window.laravel_user && window.laravel_user) return true
-  const userRoles = window.laravel_user && window.laravel_user
+  if (window.laravel_user && window.laravel_user.admin) return true
+  const userRoles = window.laravel_user && window.laravel_user.roles
   if (userRoles) {
     if (userRoles.indexOf(role) === -1) return false
     else return true
@@ -30,7 +30,7 @@ const hasRole = (role) => {
 
 const can = (permission, resource = null) => {
   const user = window.laravel_user
-  if (user && user.isSuperAdmin) return true
+  if (user && user.admin) return true
   const userPermissions = user && user.permissions
 
   if (resource instanceof Object) {
