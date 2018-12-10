@@ -1,14 +1,24 @@
 <?php
 namespace App\Http\Controllers;
+use App\Http\Requests\UserTasksIndex;
+use App\Http\Requests\UserTasquesIndex;
 use App\Task;
-use Illuminate\Http\Request;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+
 class TasquesController extends Controller
 {
-    public function index()
+
+    public function index(UserTasksIndex $request)
     {
-        // MVC
-        $tasks =  Task::orderBy('created_at','desc')->get();
-        return view('tasques',
-            compact('tasks'));
+        if (Auth::user()->can('tasks.manage')) {
+            $tasks = map_collection(Task::orderBy('created_at', 'desc')->get());
+            $uri = '/api/v1/tasks';
+        } else {
+            $tasks = map_collection($request->user()->tasks);
+            $uri = '/api/v1/user/tasks';
+        }
+        $users = User::all();
+        return view('tasques', compact('tasks', 'users', 'uri'));
     }
 }

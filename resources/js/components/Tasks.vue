@@ -1,5 +1,5 @@
 <template>
-<v-card id="tasks" class="tasks container flex justify-center">
+    <v-card id="tasks" class="tasks container flex justify-center">
         <v-container grid-list-md text-xs-center>
             <v-layout row wrap>
                 <v-flex xs12 justify-center>

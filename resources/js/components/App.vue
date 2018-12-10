@@ -1,28 +1,41 @@
 <script>
-export default{
+export default {
   el: '#app',
   name: 'App',
   data: () => ({
     drawer: null,
+    drawerRight: null,
     items: [
+      { icon: 'home', text: 'Welcome', url: '/' },
       {
         icon: 'keyboard_arrow_up',
         'icon-alt': 'keyboard_arrow_down',
         text: 'Tasques',
         model: true,
         children: [
-          { icon: 'assignment', text: 'Tasques PHP', url: '/tasks' },
-          { icon: 'assignment', text: 'Tasques Vue', url: 'tasks_vue' },
-          { icon: 'assignment', text: 'Tasques Vue', url: 'tasques' }
+          { icon: 'assignment', text: 'Tasques_PHP', url: '/tasks' },
+          { icon: 'assignment', text: 'Tasques_Tailwind', url: 'tasks_vue' },
+          { icon: 'assignment', text: 'Tasques', url: 'tasques' }
 
         ]
       },
-      { icon: 'account_box', text: 'Sobre nosaltres', url: '/about' },
+      { icon: 'account_box', text: 'Sobre mi', url: '/about' },
+      { icon: 'help', text: 'Contacte', url: '/contact' },
       { icon: 'date_range', text: 'Calendari', url: '/calendari' }
     ]
   }),
-  props: {
-    source: String
+  methods: {
+    impersonate (user) {
+      console.log('IMPERSONATE')
+      console.log('user:')
+      console.log(user)
+      if (user) {
+        window.location.href = '/impersonate/take/' + user
+      } else {
+        console.log('CACA')
+      }
+    }
   }
 }
+
 </script>

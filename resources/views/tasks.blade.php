@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Tasques
+    Tasques 
 @endsection
 @section('content')
     <v-card>

@@ -71,4 +71,72 @@ class UserTest extends TestCase
         $this->assertEmpty($tasks);
     }
 
+
+    public function isSuperAdmin()
+    {
+
+        $user = factory(User::class)->create();
+        dd($user->admin);
+        $this->assertFalse($user->isSuperAdmin);
+        $user->admin = true;
+        $user->save();
+        $this->assertTrue($user->isSuperAdmin());
+
+    }
+
+    /**
+     * @test
+     */
+    public function map()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardo@jeans.com'
+        ]);
+
+        $mappedUser = $user->map();
+
+        $this->assertEquals($mappedUser['id'],1);
+        $this->assertEquals($mappedUser['name'],'Pepe Pardo Jeans');
+        $this->assertEquals($mappedUser['email'],'pepepardo@jeans.com');
+        $this->assertEquals($mappedUser['gravatar'],'https://www.gravatar.com/avatar/6849ef9c40c2540dc23ad9699a79a2f8');
+
+
+
+
+
+
+    }
+
+
+
+    /** @test */
+    public function regulars()
+    {
+        $this->assertCount(0,User::regular()->get());
+        $user1 = factory(User::class)->create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardo@jeans.com'
+        ]);
+        $user2 = factory(User::class)->create([
+            'name' => 'Pepa Parda Jeans',
+            'email' => 'pepaparda@jeans.com'
+        ]);
+        $user3 = factory(User::class)->create([
+            'name' => 'Pepa Pig',
+            'email' => 'pepapig@dibus.com'
+        ]);
+        $user3->admin = true;
+        $user3->save();
+        $this->assertCount(2,$regularusers = User::regular()->get());
+        $this->assertEquals($regularusers[0]->name,'Pepe Pardo Jeans');
+        $this->assertEquals($regularusers[1]->name, 'Pepa Parda Jeans');
+        try {
+            $regularusers[2];
+        } catch (Exception $e) {
+            dump($e);
+        }
+
+    }
 }
+

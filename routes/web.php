@@ -9,9 +9,11 @@ Auth::routes();
 
 // MIDDLEWARE
 
+
+
 // GRUP DE URLS PER USUARIS AUTENTICATS
 
-Route::middleware(['auth:api'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::post('/tasks', 'TasksController@store');
     Route::delete('/tasks/{id}', 'TasksController@destroy');
     Route::put('/tasks/{id}', 'TasksController@update');
@@ -22,30 +24,35 @@ Route::middleware(['auth:api'])->group(function () {
     });
 
     Route::view('/calendari', 'calendari');
-    Route::get('/tasques', 'TasquesController@index');
-    Route::get('/tasks_vue', 'TasksVueController@index');
-    Route::get('/home', 'TasksVueController@index');
+    Route::view('/contact', 'contact');
 
-// Propies
+    Route::get('/tasks_vue', 'TasksVueController@index');
+    Route::get('/tasques', 'TasquesController@index');
+    Route::get('/home', 'TasquesController@index');
+
+
+    // Fetes_propies
     Route::post('/taskscompleted/{task}', 'TasksCompletedController@store');
     Route::delete('/taskscompleted/{task}', 'TasksCompletedController@destroy');
+    Route::get('/tasks', 'TasksController@index');
+    Route::get('/', 'TasksController@index');
+    // User tasks
+    Route::get('/user/tasks', 'LoggedUserTasksController@index');
+
+    Route::impersonate();
 
 
-    // USER TASKS
-    Route::get('/user/tasks','LoggedUserTasksController@index');
+    //TAGS
 
-
+    Route::get('/tags','TagsController@index');
 });
-Route::get('/tasks', 'TasksController@index');
-Route::get('/', 'TasksController@index');
-// TODO
+
 Route::post('/login_alt', 'Auth\LoginAltController@login');
 Route::post('/register_alt', 'Auth\RegisterAltController@store');
-//
-////
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+//Auth::logout();

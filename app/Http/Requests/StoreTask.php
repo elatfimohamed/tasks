@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreTask extends FormRequest
 {
@@ -13,7 +14,10 @@ class StoreTask extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return  Auth::user()->can('task.store');
+
+
+
     }
 
     /**
