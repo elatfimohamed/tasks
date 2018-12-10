@@ -76243,7 +76243,7 @@ var render = function() {
                         _c(
                           "td",
                           [
-                            _vm.$can("user.tasks.show", _vm.tasks)
+                            _vm.$can("tasks.show", task)
                               ? _c(
                                   "v-btn",
                                   {
@@ -76266,7 +76266,7 @@ var render = function() {
                                 )
                               : _vm._e(),
                             _vm._v(" "),
-                            _vm.$can("user.tasks.update", _vm.tasks)
+                            _vm.$can("user.tasks.update", task)
                               ? _c(
                                   "v-btn",
                                   {
@@ -76289,7 +76289,7 @@ var render = function() {
                                 )
                               : _vm._e(),
                             _vm._v(" "),
-                            _vm.$can("user.tasks.destroy", _vm.tasks)
+                            _vm.$can("user.tasks.destroy", task)
                               ? _c(
                                   "v-btn",
                                   {
@@ -78015,8 +78015,8 @@ var disappear = function disappear(el, modifiers) {
 
 var haveRole = function haveRole(role) {
   if (role == null) return true;
-  if (window.laravel_user && window.laravel_user) return true;
-  var userRoles = window.laravel_user && window.laravel_user;
+  if (window.laravel_user && window.laravel_user.admin) return true;
+  var userRoles = window.laravel_user && window.laravel_user.roles;
   if (userRoles) {
     if (userRoles.indexOf(role) === -1) return false;else return true;
   }
@@ -78031,7 +78031,7 @@ var can = function can(permission) {
   var resource = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
   var user = window.laravel_user;
-  if (user && user.isSuperAdmin) return true;
+  if (user && user.admin) return true;
   var userPermissions = user && user.permissions;
 
   if (resource instanceof Object) {

@@ -3,14 +3,14 @@
 @section('content')
     <v-app light>
         <v-toolbar class="white">
-            <v-toolbar-title>Aplicació de tasques</v-toolbar-title>
+            <v-toolbar-title></v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn href="/login">Login</v-btn>
             <v-btn href="/register">Register</v-btn>
         </v-toolbar>
         <v-content>
             <section>
-                <v-parallax src="img/hero.jpeg" height="600">
+                <v-parallax src="img/hero.jpg" height="600">
                     <v-layout
                             column
                             align-center
@@ -18,8 +18,8 @@
                             class="white--text"
                     >
                         <img src="img/vuetify.png" alt="Vuetify.js" height="200">
-                        <h1 class="white--text mb-2 display-1 text-xs-center">Parallax Template</h1>
-                        <div class="subheading mb-3 text-xs-center">Powered by Vuetify</div>
+                        <h1 class="white--text mb-2 display-1 text-xs-center">Elatfi Mohamed</h1>
+                        <div class="subheading mb-3 text-xs-center">Task</div>
                         <v-btn
                                 class="blue lighten-2 mt-5"
                                 dark
@@ -102,7 +102,7 @@
             </section>
 
             <section>
-                <v-parallax src="img/section.jpeg" height="380">
+                <v-parallax src="img/desert.jpg" height="380">
                     <v-layout column align-center justify-center>
                         <div class="headline white--text mb-3 text-xs-center">Web development has never been easier</div>
                         <em>Kick-start your application today</em>
