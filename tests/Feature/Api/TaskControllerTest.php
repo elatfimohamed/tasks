@@ -144,23 +144,36 @@ class TaskControllerTest extends TestCase
     /**
      * @test
      */
-    public function can_create_task()
+    public function superadmin_can_create_task()
     {
-//        $this->withoutExceptionHandling();
-        // 1
-        login($this,'api');
-        // 2
-        $response = $this->json('POST', '/api/v1/tasks/', [
-            'name' => 'Comprar pa'
+        $this->loginAsSuperAdmin('api');
+        $response = $this->json('POST','/api/v1/tasks/',[
+            'name' => 'Comprar pa',
+            'completed' => false
         ]);
-
-        // 3
         $result = json_decode($response->getContent());
         $response->assertSuccessful();
-
-        //        $this->assertDatabaseMissing('tasks', $task);
         $this->assertNotNull($task = Task::find($result->id));
-        $this->assertEquals('Comprar pa', $result->name);
+        $this->assertEquals('Comprar pa',$result->name);
+        $this->assertFalse($result->completed);
+    }
+
+
+    /**
+     * @test
+     */
+
+    public function task_manager_can_create_task()
+    {
+        $this->loginAsTaskManager('api');
+        $response = $this->json('POST','/api/v1/tasks/',[
+            'name' => 'Comprar pa',
+            'completed' => false
+        ]);
+        $result = json_decode($response->getContent());
+        $response->assertSuccessful();
+        $this->assertNotNull($task = Task::find($result->id));
+        $this->assertEquals('Comprar pa',$result->name);
         $this->assertFalse($result->completed);
     }
 
