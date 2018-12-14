@@ -74199,176 +74199,176 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'Tasques',
-    components: {
-        'task-completed-toggle': __WEBPACK_IMPORTED_MODULE_1__TaskCompletedToggle___default.a,
-        'toggle': __WEBPACK_IMPORTED_MODULE_2__Toggle___default.a
+  name: 'Tasques',
+  components: {
+    'task-completed-toggle': __WEBPACK_IMPORTED_MODULE_1__TaskCompletedToggle___default.a,
+    'toggle': __WEBPACK_IMPORTED_MODULE_2__Toggle___default.a
+  },
+  data: function data() {
+    return {
+      dataUsers: this.users,
+      description: '',
+      completed: false,
+      name: '',
+      createDialog: false,
+      editDialog: false,
+      showDialog: false,
+      takeTask: '',
+      user: '',
+      taskBeingUpdated: '',
+      usersold: ['Sergi Baucells', 'Jordi baucells', 'Carmen Rodríguez'],
+      filter: 'Totes',
+      filters: ['Totes', 'Completades', 'Pendents'],
+      search: '',
+      pagination: {
+        rowsPerPage: 25
+      },
+      removing: null,
+      creating: false,
+      loading: false,
+      deleting: false,
+      showing: false,
+      editing: false,
+      dataTasks: this.tasks,
+      headers: [{ text: 'Id', value: 'id' }, { text: 'Nom', value: 'name' }, { text: 'Usuari', value: 'user_id' }, { text: 'Completat', value: 'completed' }, { text: 'Creat', value: 'created_at_timestamp' }, { text: 'Modificat', value: 'updated_at_timestamp' }, { text: 'Accions', sortable: false, value: 'full_search' }]
+    };
+  },
+
+  props: {
+    tasks: {
+      type: Array,
+      required: true
     },
-    data: function data() {
-        return {
-            dataUsers: this.users,
-            description: '',
-            completed: false,
-            name: '',
-            createDialog: false,
-            editDialog: false,
-            showDialog: false,
-            takeTask: '',
-            user: '',
-            taskBeingUpdated: '',
-            usersold: ['Sergi Baucells', 'Jordi baucells', 'Carmen Rodríguez'],
-            filter: 'Totes',
-            filters: ['Totes', 'Completades', 'Pendents'],
-            search: '',
-            pagination: {
-                rowsPerPage: 25
-            },
-            removing: null,
-            creating: false,
-            loading: false,
-            deleting: false,
-            showing: false,
-            editing: false,
-            dataTasks: this.tasks,
-            headers: [{ text: 'Id', value: 'id' }, { text: 'Nom', value: 'name' }, { text: 'Usuari', value: 'user_id' }, { text: 'Completat', value: 'completed' }, { text: 'Creat', value: 'created_at_timestamp' }, { text: 'Modificat', value: 'updated_at_timestamp' }, { text: 'Accions', sortable: false, value: 'full_search' }]
-        };
+    users: {
+      type: Array,
+      required: true
     },
-
-    props: {
-        tasks: {
-            type: Array,
-            required: true
-        },
-        users: {
-            type: Array,
-            required: true
-        },
-        uri: {
-            type: String,
-            required: true
-        }
-    },
-    methods: {
-        refresh: function refresh() {
-            var _this = this;
-
-            this.loading = true;
-            window.axios.get(this.uri).then(function (response) {
-                // SHOW SNACKBAR MISSATGE OK
-                _this.dataTasks = response.data;
-                // this.showMessage("S'ha refrescat correctament")
-                _this.$snackbar.showMessage("S'ha refrescat correctament");
-                _this.loading = false;
-            }).catch(function (error) {
-                _this.$snackbar.showError(error.message);
-                _this.loading = false;
-                // SHOW SNACKBAR ERROR
-            });
-        },
-        opcio1: function opcio1() {
-            console.log('TODO OPCIÓ 1');
-        },
-        removeTask: function removeTask(task) {
-            this.dataTasks.splice(this.dataTasks.indexOf(task), 1);
-        },
-        destroy: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(task) {
-                var _this2 = this;
-
-                var result;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                _context.next = 2;
-                                return this.$confirm('Les tasques esborrades no es poden recuperar!', {
-                                    title: 'Esteu segurs?',
-                                    buttonFalseText: 'Cancel·lar',
-                                    buttonTrueText: 'Eliminar',
-                                    color: 'error'
-                                });
-
-                            case 2:
-                                result = _context.sent;
-
-                                if (result) {
-                                    // OK tirem endevant
-                                    this.removing = task.id;
-                                    window.axios.delete(this.uri + '/' + task.id).then(function () {
-                                        _this2.removeTask(task);
-                                        task = null;
-                                        _this2.$snackbar.showMessage("S'ha esborrat correctament");
-                                        _this2.removing = null;
-                                    }).catch(function (error) {
-                                        _this2.$snackbar.showError(error.message);
-                                        _this2.removing = null;
-                                    });
-                                }
-
-                            case 4:
-                            case 'end':
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
-
-            function destroy(_x) {
-                return _ref.apply(this, arguments);
-            }
-
-            return destroy;
-        }(),
-        create: function create() {
-            var _this3 = this;
-
-            this.creating = true;
-            window.axios.post(this.uri, {
-                user_id: this.user.id,
-                name: this.name,
-                completed: this.completed,
-                description: this.description
-            }).then(function () {
-                _this3.refresh();
-                _this3.createDialog = false;
-                _this3.$snackbar.showMessage("S'ha creat correctament");
-                _this3.creating = false;
-            }).catch(function (error) {
-                _this3.$snackbar.showError(error.message);
-                _this3.creating = false;
-            });
-        },
-        update: function update() {
-            var _this4 = this;
-
-            this.editing = true;
-            window.axios.put(this.uri + '/' + this.taskBeingUpdated.id, {
-                user_id: this.taskBeingUpdated.user.id,
-                name: this.taskBeingUpdated.name,
-                completed: this.taskBeingUpdated.completed,
-                description: this.taskBeingUpdated.description
-            }).then(function () {
-                _this4.editDialog = false;
-                _this4.taskBeingRemoved = null;
-                _this4.$snackbar.showMessage("S'ha actualitzat correctament");
-                _this4.editing = false;
-            }).catch(function (error) {
-                _this4.$snackbar.showError(error.message);
-                _this4.editing = false;
-            });
-        },
-        showUpdate: function showUpdate(task) {
-            this.editDialog = true;
-            this.taskBeingUpdated = task;
-        },
-        showTask: function showTask(task) {
-            this.takeTask = task;
-            this.showDialog = true;
-        },
-        showCreate: function showCreate() {
-            this.createDialog = true;
-        }
+    uri: {
+      type: String,
+      required: true
     }
+  },
+  methods: {
+    refresh: function refresh() {
+      var _this = this;
+
+      this.loading = true;
+      window.axios.get(this.uri).then(function (response) {
+        // SHOW SNACKBAR MISSATGE OK
+        _this.dataTasks = response.data;
+        // this.showMessage("S'ha refrescat correctament")
+        _this.$snackbar.showMessage("S'ha refrescat correctament");
+        _this.loading = false;
+      }).catch(function (error) {
+        _this.$snackbar.showError(error.message);
+        _this.loading = false;
+        // SHOW SNACKBAR ERROR
+      });
+    },
+    opcio1: function opcio1() {
+      console.log('TODO OPCIÓ 1');
+    },
+    removeTask: function removeTask(task) {
+      this.dataTasks.splice(this.dataTasks.indexOf(task), 1);
+    },
+    destroy: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(task) {
+        var _this2 = this;
+
+        var result;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.$confirm('Les tasques esborrades no es poden recuperar!', {
+                  title: 'Esteu segurs?',
+                  buttonFalseText: 'Cancel·lar',
+                  buttonTrueText: 'Eliminar',
+                  color: 'error'
+                });
+
+              case 2:
+                result = _context.sent;
+
+                if (result) {
+                  // OK tirem endevant
+                  this.removing = task.id;
+                  window.axios.delete(this.uri + '/' + task.id).then(function () {
+                    _this2.removeTask(task);
+                    task = null;
+                    _this2.$snackbar.showMessage("S'ha esborrat correctament");
+                    _this2.removing = null;
+                  }).catch(function (error) {
+                    _this2.$snackbar.showError(error.message);
+                    _this2.removing = null;
+                  });
+                }
+
+              case 4:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function destroy(_x) {
+        return _ref.apply(this, arguments);
+      }
+
+      return destroy;
+    }(),
+    create: function create() {
+      var _this3 = this;
+
+      this.creating = true;
+      window.axios.post(this.uri, {
+        user_id: this.user.id,
+        name: this.name,
+        completed: this.completed,
+        description: this.description
+      }).then(function () {
+        _this3.refresh();
+        _this3.createDialog = false;
+        _this3.$snackbar.showMessage("S'ha creat correctament");
+        _this3.creating = false;
+      }).catch(function (error) {
+        _this3.$snackbar.showError(error.message);
+        _this3.creating = false;
+      });
+    },
+    update: function update() {
+      var _this4 = this;
+
+      this.editing = true;
+      window.axios.put(this.uri + '/' + this.taskBeingUpdated.id, {
+        user_id: this.taskBeingUpdated.user.id,
+        name: this.taskBeingUpdated.name,
+        completed: this.taskBeingUpdated.completed,
+        description: this.taskBeingUpdated.description
+      }).then(function () {
+        _this4.editDialog = false;
+        _this4.taskBeingRemoved = null;
+        _this4.$snackbar.showMessage("S'ha actualitzat correctament");
+        _this4.editing = false;
+      }).catch(function (error) {
+        _this4.$snackbar.showError(error.message);
+        _this4.editing = false;
+      });
+    },
+    showUpdate: function showUpdate(task) {
+      this.editDialog = true;
+      this.taskBeingUpdated = task;
+    },
+    showTask: function showTask(task) {
+      this.takeTask = task;
+      this.showDialog = true;
+    },
+    showCreate: function showCreate() {
+      this.createDialog = true;
+    }
+  }
 });
 
 /***/ }),

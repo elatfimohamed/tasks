@@ -2,11 +2,12 @@
 
 @section('content')
     <v-app light>
-        <v-toolbar class="white">
-            <v-toolbar-title></v-toolbar-title>
+        <v-toolbar  class="white">
+            <v-toolbar-title  dark class="blue-grey darken-4" class="white--text" >
             <v-spacer></v-spacer>
-            <v-btn href="/login">Login</v-btn>
-            <v-btn href="/register">Register</v-btn>
+            <v-btn   href="/login" > Login</v-btn>
+            <v-btn   href="/register">Register</v-btn>
+            </v-toolbar-title>
         </v-toolbar>
         <v-content>
             <section>
@@ -53,7 +54,7 @@
                                 <v-flex xs12 md4>
                                     <v-card class="elevation-0 transparent">
                                         <v-card-text class="text-xs-center">
-                                            <v-icon x-large class="blue--text text--lighten-2">color_lens</v-icon>
+                                            <v-icon x-large class="black--text text--lighten-2">color_lens</v-icon>
                                         </v-card-text>
                                         <v-card-title primary-title class="layout justify-center">
                                             <div class="headline text-xs-center">Material Design</div>
@@ -173,7 +174,7 @@
                 </v-container>
             </section>
 
-            <v-footer class="blue darken-2">
+            <v-footer class="black darken-2">
                 <v-layout row wrap align-center>
                     <v-flex xs12>
                         <div class="white--text ml-3">

@@ -247,8 +247,8 @@ if (!function_exists('create_example_tasks')) {
 
             try {
                 $bartsimpson = factory(User::class)->create([
-                    'name' => 'Bart Simpson',
-                    'email' => 'bartsimpson@simpson.com'
+                    'name' => 'maggie simpson',
+                    'email' => 'maggiesimpson@simpson.com'
                 ]);
             } catch (Exception $e) {}
 

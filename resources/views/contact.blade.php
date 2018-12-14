@@ -5,7 +5,6 @@
     {{--Contacte--}}
 {{--@endsection--}}
 @section('content')
-    Hola blalb labllblalalblablbl
 
 
 

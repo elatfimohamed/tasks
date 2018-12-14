@@ -116,7 +116,7 @@
             </v-card>
         </v-dialog>
 
-        <v-toolbar color="blue">
+        <v-toolbar color="black">
             <v-menu>
                 <v-btn slot="activator" icon dark>
                     <v-icon>more_vert</v-icon>
@@ -179,7 +179,7 @@
                     :pagination.sync="pagination"
                     class="hidden-md-and-down"
             >
-                <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+                <v-progress-linear slot="progress" color="black" indeterminate></v-progress-linear>
                 <template slot="items" slot-scope="{item:task}">
                     <tr>
                         <td>{{task.id}}</td>
