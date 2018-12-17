@@ -3,7 +3,6 @@
 namespace Tests\Feature\Api;
 
 use App\Task;
-use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Feature\Traits\CanLogin;
 use Tests\TestCase;

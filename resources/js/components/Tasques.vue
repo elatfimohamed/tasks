@@ -3,7 +3,7 @@
 
         <v-dialog v-model="createDialog" fullscreen transition="dialog-bottom-transition"
                   @keydown.esc="createDialog=false">
-            <v-toolbar color="primary" class="white--text">
+            <v-toolbar color="black" class="white--text">
                 <v-btn flat icon class="white--text" @click="createDialog=false">
                     <v-icon class="mr-2">close</v-icon>
                 </v-btn>
