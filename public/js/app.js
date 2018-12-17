@@ -72267,7 +72267,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         text: 'Tasques',
         model: true,
         children: [{ icon: 'assignment', text: 'Tasques_PHP', url: '/tasks' }, { icon: 'assignment', text: 'Tasques_Tailwind', url: 'tasks_vue' }, { icon: 'assignment', text: 'Tasques', url: 'tasques' }]
-      }, { icon: 'account_box', text: 'Sobre mi', url: '/about' }, { icon: 'help', text: 'Contacte', url: '/contact' }, { icon: 'date_range', text: 'Calendari', url: '/calendari' }]
+      }, { icon: 'help', text: 'Contacte', url: '/contact' }, { icon: 'account_box', text: 'about', url: '/about' }, { icon: 'date_range', text: 'Calendari', url: '/calendari' }]
     };
   },
   methods: {
@@ -76013,7 +76013,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-toolbar",
-        { attrs: { color: "blue" } },
+        { attrs: { color: "black" } },
         [
           _c(
             "v-menu",
@@ -76322,7 +76322,7 @@ var render = function() {
             },
             [
               _c("v-progress-linear", {
-                attrs: { slot: "progress", color: "blue", indeterminate: "" },
+                attrs: { slot: "progress", color: "black", indeterminate: "" },
                 slot: "progress"
               })
             ],
