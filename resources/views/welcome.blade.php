@@ -2,12 +2,22 @@
 
 @section('content')
     <v-app light>
-        <v-toolbar  class="white">
-            <v-toolbar-title  dark class="blue-grey darken-4" class="white--text" >
+
+
+        <v-toolbar dark class="blue-grey darken-4" class="white--text">
+            <v-toolbar-title>MY APP </v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn   href="/login" > Login</v-btn>
-            <v-btn   href="/register">Register</v-btn>
-            </v-toolbar-title>
+            @if (!Auth::user())
+                <v-btn class="black lighten-2 white--text" href="/login">Login</v-btn>
+                <v-btn class="black lighten-2 white--text" href="/register">Register</v-btn>
+            @else
+                <v-toolbar-title>
+                <span>{{ Auth::user()->name }}</span>
+                </v-toolbar-title>
+                <v-btn dark round color="black" class="elevation-2" placeholder="Home" href="/home">
+                    <v-icon>home</v-icon>
+                </v-btn>
+            @endif
         </v-toolbar>
         <v-content>
             <section>
@@ -18,11 +28,12 @@
                             justify-center
                             class="white--text"
                     >
-                        <img src="img/vuetify.png" alt="Vuetify.js" height="200">
+                        <img src="img/vuetify.png"  alt="Vuetify.js" height="200">
                         <h1 class="white--text mb-2 display-1 text-xs-center">Elatfi Mohamed</h1>
+                        <div class="subheading mb-3 text-xs-center">Està en mode: {{ config('app.env') }}</div>
                         <div class="subheading mb-3 text-xs-center">Task</div>
                         <v-btn
-                                class="blue lighten-2 mt-5"
+                                class="black lighten-2 mt-5"
                                 dark
                                 large
                                 href="/home"
@@ -69,7 +80,7 @@
                                 <v-flex xs12 md4>
                                     <v-card class="elevation-0 transparent">
                                         <v-card-text class="text-xs-center">
-                                            <v-icon x-large class="blue--text text--lighten-2">flash_on</v-icon>
+                                            <v-icon x-large class="black--text text--lighten-2">flash_on</v-icon>
                                         </v-card-text>
                                         <v-card-title primary-title class="layout justify-center">
                                             <div class="headline">Fast development</div>
@@ -84,7 +95,7 @@
                                 <v-flex xs12 md4>
                                     <v-card class="elevation-0 transparent">
                                         <v-card-text class="text-xs-center">
-                                            <v-icon x-large class="blue--text text--lighten-2">build</v-icon>
+                                            <v-icon x-large class="black--text text--lighten-2">build</v-icon>
                                         </v-card-text>
                                         <v-card-title primary-title class="layout justify-center">
                                             <div class="headline text-xs-center">Completely Open Sourced</div>
@@ -108,7 +119,7 @@
                         <div class="headline white--text mb-3 text-xs-center">Web development has never been easier</div>
                         <em>Kick-start your application today</em>
                         <v-btn
-                                class="blue lighten-2 mt-5"
+                                class="black lighten-2 mt-5"
                                 dark
                                 large
                                 href="/"
@@ -145,7 +156,7 @@
                                 <v-list class="transparent">
                                     <v-list-tile>
                                         <v-list-tile-action>
-                                            <v-icon class="blue--text text--lighten-2">phone</v-icon>
+                                            <v-icon class="black--text text--lighten-2">phone</v-icon>
                                         </v-list-tile-action>
                                         <v-list-tile-content>
                                             <v-list-tile-title>777-867-5309</v-list-tile-title>
@@ -153,7 +164,7 @@
                                     </v-list-tile>
                                     <v-list-tile>
                                         <v-list-tile-action>
-                                            <v-icon class="blue--text text--lighten-2">place</v-icon>
+                                            <v-icon class="black--text text--lighten-2">place</v-icon>
                                         </v-list-tile-action>
                                         <v-list-tile-content>
                                             <v-list-tile-title>Chicago, US</v-list-tile-title>
@@ -161,7 +172,7 @@
                                     </v-list-tile>
                                     <v-list-tile>
                                         <v-list-tile-action>
-                                            <v-icon class="blue--text text--lighten-2">email</v-icon>
+                                            <v-icon class="black--text text--lighten-2">email</v-icon>
                                         </v-list-tile-action>
                                         <v-list-tile-content>
                                             <v-list-tile-title>john@vuetifyjs.com</v-list-tile-title>
