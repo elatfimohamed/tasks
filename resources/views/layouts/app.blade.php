@@ -90,19 +90,22 @@
                 app
         >
             <v-card>
-                <v-card-title class="blue darken-3 white--text"><h4>Perfil</h4></v-card-title>
+                <v-card-title class="black darken-3 white--text"><h4>Perfil</h4></v-card-title>
                 <v-layout row wrap>
                     <v-flex xs12>
                         <ul>
                             <li>Nom : {{ Auth::user()->name }}</li>
                             <li>Email : {{ Auth::user()->email }}</li>
                             <li>Admin : {{ Auth::user()->admin }}</li>
+                            <li>Roles : {{ implode(',',Auth::user()->map()['roles']) }}</li>
+                            <li>Permissions : {{ implode(', ',Auth::user()->map()['permissions']) }}</li>
+
                         </ul>
                     </v-flex>
                 </v-layout>
             </v-card>
             <v-card>
-                <v-card-title class="blue darken-3 white--text"><h4>Opcions administrador</h4></v-card-title>
+                <v-card-title class="black darken-3 white--text"><h4>Opcions administrador</h4></v-card-title>
 
                 <v-layout row wrap>
                     @impersonating
@@ -125,7 +128,7 @@
             </v-card>
         </v-navigation-drawer>
         <v-toolbar
-                color="indigo"
+                color="black"
                 dark
                 app
                 clipped-left
@@ -139,14 +142,14 @@
             </v-avatar>
             <v-form action="logout" method="POST">
                 @csrf
-                <v-btn color="primary" type="submit">Logout</v-btn>
+                <v-btn color="black" type="submit">Logout</v-btn>
             </v-form>
         </v-toolbar>
         <v-content>
             @yield('content')
         </v-content>
-        <v-footer color="indigo" app>
-            <span class="white--text">&copy; 2017</span>
+        <v-footer color="black" app>
+            <span class="white--text">Mohame Elatfi &copy; 2017</span>
         </v-footer>
     </v-app>
 </div>

@@ -53,6 +53,10 @@ Route::post('/register_alt', 'Auth\RegisterAltController@store');
 
 Route::get('/', function () {
     return view('welcome');
-});
+
+
+    });
+
+
 
 //Auth::logout();

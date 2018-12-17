@@ -3,6 +3,8 @@
 namespace Tests\Feature\Traits;
 
 use App\User;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 trait CanLogin
 {
@@ -13,7 +15,7 @@ trait CanLogin
     protected function login($guard = null)
     {
         $user = factory(User::class)->create();
-        $this->actingAs($user,$guard);
+        $this->actingAs($user, $guard);
         return $user;
     }
 
@@ -21,18 +23,15 @@ trait CanLogin
      * @param null $guard
      * @return mixed
      */
-    protected function loginAsUsingRole($guard,$role)
+    protected function loginAsUsingRole($guard, $role)
     {
         initialize_roles();
         $user = factory(User::class)->create();
-
         $roles = is_array($role) ? $role : [$role];
-
         foreach ($roles as $role) {
             $user->assignRole($role);
         }
-
-        $this->actingAs($user,$guard);
+        $this->actingAs($user, $guard);
         return $user;
     }
 
@@ -51,7 +50,7 @@ trait CanLogin
      */
     protected function loginAsTaskManager($guard = null)
     {
-        return $this->loginAsUsingRole($guard, ['TaskManager','Tasks']);
+        return $this->loginAsUsingRole($guard, ['TaskManager', 'Tasks', 'TagsManager']);
     }
 
     /**
@@ -60,21 +59,21 @@ trait CanLogin
      */
     protected function loginAsTagsManager($guard = null)
     {
-        return $this->loginAsUsingRole($guard,'TagsManager');
+        return $this->loginAsUsingRole($guard, ['TagsManager', 'Tags']);
     }
 
     /**
      * @param null $guard
      * @return mixed
      */
-    protected function loginWithPermission($guard,$permission)
+    protected function loginWithPermission($guard, $permission)
     {
         $user = factory(User::class)->create();
         Permission::create([
             'name' => $permission
         ]);
         $user->givePermissionTo($permission);
-        $this->actingAs($user,$guard);
+        $this->actingAs($user, $guard);
         return $user;
     }
 
@@ -83,7 +82,7 @@ trait CanLogin
         $user = factory(User::class)->create();
         $user->admin = true;
         $user->save();
-        $this->actingAs($user,$guard);
+        $this->actingAs($user, $guard);
         return $user;
     }
 }

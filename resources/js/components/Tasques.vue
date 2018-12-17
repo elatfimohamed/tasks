@@ -116,7 +116,7 @@
             </v-card>
         </v-dialog>
 
-        <v-toolbar color="blue">
+        <v-toolbar color="black">
             <v-menu>
                 <v-btn slot="activator" icon dark>
                     <v-icon>more_vert</v-icon>
@@ -179,7 +179,7 @@
                     :pagination.sync="pagination"
                     class="hidden-md-and-down"
             >
-                <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+                <v-progress-linear slot="progress" color="black" indeterminate></v-progress-linear>
                 <template slot="items" slot-scope="{item:task}">
                     <tr>
                         <td>{{task.id}}</td>
@@ -264,164 +264,164 @@
 </template>
 
 <script>
-    import TaskCompletedToggle from './TaskCompletedToggle'
-    import Toggle from './Toggle'
-    export default {
-        name: 'Tasques',
-        components: {
-            'task-completed-toggle': TaskCompletedToggle,
-            'toggle': Toggle
-        },
-        data () {
-            return {
-                dataUsers: this.users,
-                description: '',
-                completed: false,
-                name: '',
-                createDialog: false,
-                editDialog: false,
-                showDialog: false,
-                takeTask: '',
-                user: '',
-                taskBeingUpdated: '',
-                usersold: [
-                    'Sergi Baucells',
-                    'Jordi baucells',
-                    'Carmen Rodríguez'
-                ],
-                filter: 'Totes',
-                filters: [
-                    'Totes',
-                    'Completades',
-                    'Pendents'
-                ],
-                search: '',
-                pagination: {
-                    rowsPerPage: 25
-                },
-                removing: null,
-                creating: false,
-                loading: false,
-                deleting: false,
-                showing: false,
-                editing: false,
-                dataTasks: this.tasks,
-                headers: [
-                    { text: 'Id', value: 'id' },
-                    { text: 'Nom', value: 'name' },
-                    { text: 'Usuari', value: 'user_id' },
-                    { text: 'Completat', value: 'completed' },
-                    { text: 'Creat', value: 'created_at_timestamp' },
-                    { text: 'Modificat', value: 'updated_at_timestamp' },
-                    { text: 'Accions', sortable: false, value: 'full_search' }
-                ]
-            }
-        },
-        props: {
-            tasks: {
-                type: Array,
-                required: true
-            },
-            users: {
-                type: Array,
-                required: true
-            },
-            uri: {
-                type: String,
-                required: true
-            }
-        },
-        methods: {
-            refresh () {
-                this.loading = true
-                window.axios.get(this.uri).then(response => {
-                    // SHOW SNACKBAR MISSATGE OK
-                    this.dataTasks = response.data
-                    // this.showMessage("S'ha refrescat correctament")
-                    this.$snackbar.showMessage("S'ha refrescat correctament")
-                    this.loading = false
-                }).catch(error => {
-                    this.$snackbar.showError(error.message)
-                    this.loading = false
-                    // SHOW SNACKBAR ERROR
-                })
-            },
-            opcio1 () {
-                console.log('TODO OPCIÓ 1')
-            },
-            removeTask (task) {
-                this.dataTasks.splice(this.dataTasks.indexOf(task), 1)
-            },
-            async destroy (task) {
-                // ES6 async await
-                let result = await this.$confirm('Les tasques esborrades no es poden recuperar!',
-                    {
-                        title: 'Esteu segurs?',
-                        buttonFalseText: 'Cancel·lar',
-                        buttonTrueText: 'Eliminar',
-                        color: 'error'
-                    })
-                if (result) {
-                    // OK tirem endevant
-                    this.removing = task.id
-                    window.axios.delete(this.uri + '/' + task.id).then(() => {
-                        this.removeTask(task)
-                        task = null
-                        this.$snackbar.showMessage("S'ha esborrat correctament")
-                        this.removing = null
-                    }).catch(error => {
-                        this.$snackbar.showError(error.message)
-                        this.removing = null
-                    })
-                }
-            },
-            create () {
-                this.creating = true
-                window.axios.post(this.uri, {
-                    user_id: this.user.id,
-                    name: this.name,
-                    completed: this.completed,
-                    description: this.description
-                }).then(() => {
-                    this.refresh()
-                    this.createDialog = false
-                    this.$snackbar.showMessage("S'ha creat correctament")
-                    this.creating = false
-                }).catch((error) => {
-                    this.$snackbar.showError(error.message)
-                    this.creating = false
-                })
-            },
-            update () {
-                this.editing = true
-                window.axios.put(this.uri + '/' + this.taskBeingUpdated.id,
-                    {
-                        user_id: this.taskBeingUpdated.user.id,
-                        name: this.taskBeingUpdated.name,
-                        completed: this.taskBeingUpdated.completed,
-                        description: this.taskBeingUpdated.description
-                    }
-                ).then(() => {
-                    this.editDialog = false
-                    this.taskBeingRemoved = null
-                    this.$snackbar.showMessage("S'ha actualitzat correctament")
-                    this.editing = false
-                }).catch(error => {
-                    this.$snackbar.showError(error.message)
-                    this.editing = false
-                })
-            },
-            showUpdate (task) {
-                this.editDialog = true
-                this.taskBeingUpdated = task
-            },
-            showTask (task) {
-                this.takeTask = task
-                this.showDialog = true
-            },
-            showCreate () {
-                this.createDialog = true
-            }
-        }
+import TaskCompletedToggle from './TaskCompletedToggle'
+import Toggle from './Toggle'
+export default {
+  name: 'Tasques',
+  components: {
+    'task-completed-toggle': TaskCompletedToggle,
+    'toggle': Toggle
+  },
+  data () {
+    return {
+      dataUsers: this.users,
+      description: '',
+      completed: false,
+      name: '',
+      createDialog: false,
+      editDialog: false,
+      showDialog: false,
+      takeTask: '',
+      user: '',
+      taskBeingUpdated: '',
+      usersold: [
+        'Sergi Baucells',
+        'Jordi baucells',
+        'Carmen Rodríguez'
+      ],
+      filter: 'Totes',
+      filters: [
+        'Totes',
+        'Completades',
+        'Pendents'
+      ],
+      search: '',
+      pagination: {
+        rowsPerPage: 25
+      },
+      removing: null,
+      creating: false,
+      loading: false,
+      deleting: false,
+      showing: false,
+      editing: false,
+      dataTasks: this.tasks,
+      headers: [
+        { text: 'Id', value: 'id' },
+        { text: 'Nom', value: 'name' },
+        { text: 'Usuari', value: 'user_id' },
+        { text: 'Completat', value: 'completed' },
+        { text: 'Creat', value: 'created_at_timestamp' },
+        { text: 'Modificat', value: 'updated_at_timestamp' },
+        { text: 'Accions', sortable: false, value: 'full_search' }
+      ]
     }
+  },
+  props: {
+    tasks: {
+      type: Array,
+      required: true
+    },
+    users: {
+      type: Array,
+      required: true
+    },
+    uri: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    refresh () {
+      this.loading = true
+      window.axios.get(this.uri).then(response => {
+        // SHOW SNACKBAR MISSATGE OK
+        this.dataTasks = response.data
+        // this.showMessage("S'ha refrescat correctament")
+        this.$snackbar.showMessage("S'ha refrescat correctament")
+        this.loading = false
+      }).catch(error => {
+        this.$snackbar.showError(error.message)
+        this.loading = false
+        // SHOW SNACKBAR ERROR
+      })
+    },
+    opcio1 () {
+      console.log('TODO OPCIÓ 1')
+    },
+    removeTask (task) {
+      this.dataTasks.splice(this.dataTasks.indexOf(task), 1)
+    },
+    async destroy (task) {
+      // ES6 async await
+      let result = await this.$confirm('Les tasques esborrades no es poden recuperar!',
+        {
+          title: 'Esteu segurs?',
+          buttonFalseText: 'Cancel·lar',
+          buttonTrueText: 'Eliminar',
+          color: 'error'
+        })
+      if (result) {
+        // OK tirem endevant
+        this.removing = task.id
+        window.axios.delete(this.uri + '/' + task.id).then(() => {
+          this.removeTask(task)
+          task = null
+          this.$snackbar.showMessage("S'ha esborrat correctament")
+          this.removing = null
+        }).catch(error => {
+          this.$snackbar.showError(error.message)
+          this.removing = null
+        })
+      }
+    },
+    create () {
+      this.creating = true
+      window.axios.post(this.uri, {
+        user_id: this.user.id,
+        name: this.name,
+        completed: this.completed,
+        description: this.description
+      }).then(() => {
+        this.refresh()
+        this.createDialog = false
+        this.$snackbar.showMessage("S'ha creat correctament")
+        this.creating = false
+      }).catch((error) => {
+        this.$snackbar.showError(error.message)
+        this.creating = false
+      })
+    },
+    update () {
+      this.editing = true
+      window.axios.put(this.uri + '/' + this.taskBeingUpdated.id,
+        {
+          user_id: this.taskBeingUpdated.user.id,
+          name: this.taskBeingUpdated.name,
+          completed: this.taskBeingUpdated.completed,
+          description: this.taskBeingUpdated.description
+        }
+      ).then(() => {
+        this.editDialog = false
+        this.taskBeingRemoved = null
+        this.$snackbar.showMessage("S'ha actualitzat correctament")
+        this.editing = false
+      }).catch(error => {
+        this.$snackbar.showError(error.message)
+        this.editing = false
+      })
+    },
+    showUpdate (task) {
+      this.editDialog = true
+      this.taskBeingUpdated = task
+    },
+    showTask (task) {
+      this.takeTask = task
+      this.showDialog = true
+    },
+    showCreate () {
+      this.createDialog = true
+    }
+  }
+}
 </script>

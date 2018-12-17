@@ -2,11 +2,14 @@
 
 namespace App;
 
+use App\Traits\FormattedDates;
 use Illuminate\Database\Eloquent\Model;
 
 
 class Task extends Model
 {
+
+    use FormattedDates;
 //    protected $fillable = ['name','completed'];
     protected $guarded = [];
 

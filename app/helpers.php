@@ -232,8 +232,8 @@ if (!function_exists('create_example_tasks')) {
         }
     }
 
-    if (!function_exists('sample_users_and_tasks')) {
-        function sample_users_and_tasks() {
+    if (!function_exists('create_sample_users_and_tasks')) {
+        function create_sample_users_and_tasks() {
             // Superadmin no cal -> soc jo mateix
 
             // Pepe Pringao -> No té cap permis ni cap rol
@@ -247,8 +247,8 @@ if (!function_exists('create_example_tasks')) {
 
             try {
                 $bartsimpson = factory(User::class)->create([
-                    'name' => 'Bart Simpson',
-                    'email' => 'bartsimpson@simpson.com'
+                    'name' => 'maggie simpson',
+                    'email' => 'maggiesimpson@simpson.com'
                 ]);
             } catch (Exception $e) {}
 
@@ -303,8 +303,8 @@ if (!function_exists('create_example_tasks')) {
     }
 
 
-    if (!function_exists('sample_users')) {
-        function sample_users()
+    if (!function_exists('create_sample_users')) {
+        function create_sample_users()
         {
             // Pepe Pringao -> No té cap permis ni cap rol
             try {

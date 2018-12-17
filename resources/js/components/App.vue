@@ -19,8 +19,9 @@ export default {
 
         ]
       },
-      { icon: 'account_box', text: 'Sobre mi', url: '/about' },
+
       { icon: 'help', text: 'Contacte', url: '/contact' },
+      { icon: 'account_box', text: 'about', url: '/about' },
       { icon: 'date_range', text: 'Calendari', url: '/calendari' }
     ]
   }),
