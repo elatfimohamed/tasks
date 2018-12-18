@@ -38,7 +38,17 @@
                                 large
                                 href="/home"
                         >
-                            Get Started
+                            Accedir
+                        </v-btn>
+
+                        <v-btn
+                                class="black lighten-2 mt-5"
+                                dark
+                                large
+                                href="https://github.com/elatfimohamed/tasks"
+                                target="_blank"
+                        >
+                            GitHub
                         </v-btn>
                     </v-layout>
                 </v-parallax>
@@ -122,9 +132,9 @@
                                 class="black lighten-2 mt-5"
                                 dark
                                 large
-                                href="/"
+                                href="/home"
                         >
-                            Get Started
+                            Accedir
                         </v-btn>
                     </v-layout>
                 </v-parallax>

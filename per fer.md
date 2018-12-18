@@ -1,0 +1,21 @@
+- 25 commits -> Pocs commits
+- [x] No es poden executar els testos a explotació
+- [x] No hi ha pàgina Welcome Vuetify 
+- [x] No funciona Login (ni tant sols es mostra, dona error modul vuelidata)
+- [x] El registre dona error al enviar el Welcome email
+- [] No puc comprovar el Registre és correcte
+- [] No hi ha estructura Vuetify ni layout amb menus ni res de res
+- [] Ha d'apareixer un link al projecte Github a la welcome Page
+- [] Ha d'apareixer la informació de la versió instal·lada (component hem fet a classe)
+- [] Falta validació Javacript al formulari de creació de tasques 
+- [] Error 500 al crear tasques
+- [] Pendent completar i descompletar tasques (Toggle) a la llista de tasques
+- [] Error 500 al esborrar tasques
+- [] Error 500 al editar
+- [] Falta validació Javascript al editar
+- [] Error 500 al executar el refresh
+- [] Tots els errors anteriors (errors 500) s'hauria de mostrar una snackbar amb l'error (només es veuen per consola)
+- [] Després d'afegir/modificar o eliminar una tasca s'ha d'actualitzar la llista.
+- [] Les tasques s'han de poder filtrar per tipus
+- [] No apareixen usuaris al impersonate
+- [] No es pot corregir tots els temes d'autenticació i autorització amb diferents usuaristots els temes d'autenticació i autorització amb diferents usuaris

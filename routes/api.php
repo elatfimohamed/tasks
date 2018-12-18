@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\GitController;
 use App\Task;
 use Illuminate\Http\Request;
 
