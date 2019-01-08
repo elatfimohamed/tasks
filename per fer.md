@@ -4,8 +4,8 @@
 - [x] No funciona Login (ni tant sols es mostra, dona error modul vuelidata)
 - [x] El registre dona error al enviar el Welcome email
 - [] No puc comprovar el Registre és correcte
-- [] No hi ha estructura Vuetify ni layout amb menus ni res de res
-- [] Ha d'apareixer un link al projecte Github a la welcome Page
+- [x] No hi ha estructura Vuetify ni layout amb menus ni res de res
+- [x] Ha d'apareixer un link al projecte Github a la welcome Page
 - [] Ha d'apareixer la informació de la versió instal·lada (component hem fet a classe)
 - [] Falta validació Javacript al formulari de creació de tasques 
 - [] Error 500 al crear tasques
