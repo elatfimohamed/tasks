@@ -105,4 +105,19 @@ var app = document.getElementById('app')
 * CORS
     * Failed to load http://localhost:8050/api/v1/tasks: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:8080' is therefore not allowed access.
     * No permet les peticions entre pàgines Web diferents.
-* 
+    
+
+# Penjar en explotació
+* Parar npm run hot
+* Executar npm run dev
+* co
+* git checkout production
+* git status (he d'estar net)
+* git merge master
+* git status (he d'estar net)
+* co
+* git checkout master
+* git push origin production o git push --all origin
+* git pull origin production (Al server)
+
+
