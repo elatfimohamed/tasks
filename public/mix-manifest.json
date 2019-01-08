@@ -1,5 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
+<<<<<<< HEAD
     "/css/app.css": "/css/app.css",
     "/0.84ffca52fffea9b66883.hot-update.js": "/0.84ffca52fffea9b66883.hot-update.js"
+=======
+    "/css/app.css": "/css/app.css"
+>>>>>>> 622402b2e594b08d17e01e574797b7e3949d2faa
 }

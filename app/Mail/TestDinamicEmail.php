@@ -1,27 +1,21 @@
 <?php
-
 namespace App\Mail;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TestDinamicEmail extends Mailable
+class WelcomeEmail extends Mailable
 {
     use Queueable, SerializesModels;
-
     public $user;
-
     /**
-     * TestDinamicEmail constructor.
+     * WelcomeEmail constructor.
      * @param $user
      */
     public function __construct($user)
     {
         $this->user = $user;
     }
-
-
     /**
      * Build the message.
      *
@@ -29,9 +23,6 @@ class TestDinamicEmail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.testdinamic');
-        //return $this->markdown('emails.test');
-
-
+        return $this->markdown('emails.welcomeEmail');
     }
 }

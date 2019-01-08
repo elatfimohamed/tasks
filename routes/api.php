@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\GitController;
+use App\Http\Controllers\Api\TagsController;
+use App\Http\Controllers\Api\TasksController;
 use App\Task;
 use Illuminate\Http\Request;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,13 +24,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:api'])->group(function () {
-    // Tasks
-    Route::get('/v1/tasks', 'Api\TasksController@index');
-    Route::get('/v1/tasks/{task}', 'Api\TasksController@show');
-    Route::delete('/v1/tasks/{task}', 'Api\TasksController@destroy');
-    Route::post('/v1/tasks/', 'Api\TasksController@store');
-    Route::put('/v1/tasks/{task}', 'Api\TasksController@update');
 
+    // TASKS
+    Route::get('/v1/tasks','\\' . TasksController::class . '@index');                // BROWSE
+    Route::get('/v1/tasks/{task}','\\' . TasksController::class . '@show');          // READ
+    Route::delete('/v1/tasks/{task}','\\' . TasksController::class . '@destroy');    // DELETE
+    Route::post('/v1/tasks','\\' . TasksController::class . '@store');               // CREATE
+    Route::put('/v1/tasks/{task}','\\' . TasksController::class . '@update');        // EDIT
 
 
     // Tags
