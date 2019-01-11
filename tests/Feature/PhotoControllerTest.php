@@ -21,7 +21,7 @@ class PhotoControllerTest extends TestCase
     public function upload_photo()
 
     {
-       $this->withoutExceptionHandling();
+      // $this->withoutExceptionHandling();
         Storage::fake('local');
         Storage::fake('google');
 
@@ -32,7 +32,7 @@ class PhotoControllerTest extends TestCase
         $response->assertRedirect();
 
         Storage::disk('local')->assertExists($photoUrl = 'photos/' . $user->id . '.jpg');
-      //  Storage::disk('google')->assertExists($photoUrl = 'photos/' . $user->id . '.jpg');
+        Storage::disk('google')->assertExists( '/' . $user->id . '.jpg');
 
         $photo = Photo::first();
         $this->assertEquals($photoUrl, $photo->url);
