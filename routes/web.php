@@ -5,6 +5,9 @@
 //delete -> destory
 //edit -> PUT
 
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\ProfileController;
+
 Auth::routes();
 
 // MIDDLEWARE
@@ -50,6 +53,9 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/login_alt', 'Auth\LoginAltController@login');
 Route::post('/register_alt', 'Auth\RegisterAltController@store');
 
+Route::get('/profile', '\\'. ProfileController::class . '@show');
+
+Route::post('/photo', '\\'. PhotoController::class . '@store');
 
 Route::get('/', function () {
     return view('welcome');
