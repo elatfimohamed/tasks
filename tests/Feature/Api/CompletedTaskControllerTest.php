@@ -46,6 +46,7 @@ class CompletedTaskControllerTest extends TestCase
      */
     public function can_uncomplete_a_task()
     {
+
         login($this,'api');
         //1
         $task = Task::create([

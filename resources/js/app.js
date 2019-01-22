@@ -17,7 +17,10 @@ import permissions from './plugins/permissions'
 import Profile from './components/Profile'
 import snackbar from './plugins/snackbar'
 import confirm from './plugins/confirm'
+//import Changelog from './components/changelog/ChangelogComponent.vue'
 import GitInfo from './components/git/GitInfoComponent.vue'
+//import Navigation from './components/Navigation'
+import ServiceWorker from './components/ServiceWorker'
 
 Vue.use(Vuelidate)
 
@@ -118,6 +121,9 @@ window.Vue.component('register-form', RegisterForm)
 window.Vue.component('user-list', UserList)
 window.Vue.component('user-select', UserSelect)
 window.Vue.component('profile', Profile)
+//window.Vue.component('changelog', Changelog)
+//window.Vue.component('navigation', Navigation)
+window.Vue.component('service-worker', ServiceWorker)
 
 // eslint-disable-next-line no-unused-vars
 const app = new window.Vue(AppComponent)
