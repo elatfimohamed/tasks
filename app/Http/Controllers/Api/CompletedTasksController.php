@@ -10,9 +10,11 @@ class CompletedTasksController
 {
     public function destroy(Request $request, Task $task)
     {
-        $task->completed=false;
+        $task->completed = false;
         $task->save();
     }
+
+
 
     public function store(Request $request, Task $task)
     {
