@@ -13,7 +13,7 @@
     <meta property="og:url" content="https://tasks.mohamedelatfi.scool.cat/">
     <meta property="og:image" content="https://tasks.mohamedelatfi.scool.cat/img/og-image.jpg">
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
-    <link rel="manifest" href="/manifest.json">
+   {{--<link rel="manifest" href="/manifest.json">--}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <style>
