@@ -29,7 +29,6 @@ window.Vuetify = Vuetify
 const PRIMARY_COLOR_KEY = 'primary_color_key'
 const primaryColor = window.localStorage.getItem(PRIMARY_COLOR_KEY) || '#2680C2'
 
-
 window.Vue.use(window.Vuetify, {
   theme: {
     primary: {
