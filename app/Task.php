@@ -41,7 +41,14 @@ class Task extends Model
 
     public function addTag($tag)
     {
-        $this->tags()->save($tag);
+//        !is_int($tag) ?: $tag = Tag::find($tag);
+        if (is_int($tag)) $tag = Tag::find($tag);
+        try {
+            $this->tags()->save($tag);
+        } catch (\Exception $e) {
+
+        }
+        return $this;
     }
 
     public function addTags(array $tags)
@@ -86,8 +93,8 @@ class Task extends Model
             'updated_at_human' => $this->updated_at_human,
             'updated_at_timestamp' => $this->updated_at_timestamp,
             'user' => $this->user,
-            'full_search' => $this->full_search
-
+            'full_search' => $this->full_search,
+            'tags' => $this->tags
         ];
     }
     public function getFullSearchAttribute()

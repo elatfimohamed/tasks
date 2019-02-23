@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         initialize_roles();
         create_primary_user();
+        create_acacha_user();
         create_example_tasks();
         create_sample_users();
         create_sample_users_and_tasks();

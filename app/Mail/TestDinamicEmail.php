@@ -4,7 +4,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class WelcomeEmail extends Mailable
+class TestDinamicEmail extends Mailable
 {
     use Queueable, SerializesModels;
     public $user;
@@ -23,6 +23,6 @@ class WelcomeEmail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.welcomeEmail');
+        return $this->markdown('emails.testdinamic');
     }
 }

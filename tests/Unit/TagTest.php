@@ -90,17 +90,24 @@ class TagTest extends TestCase
     {
         // 1 Prepare
         $task = Task::create([
-            'name' => 'Comprar pa'
+            'name' => 'Comprar pa',
+            'description' => 'pa'
         ]);
 
         $tag1 = Tag::create([
-            'name' => 'home'
+            'name' => 'home',
+            'description' => 'home',
+            'color' => 'blau'
         ]);
         $tag2 = Tag::create([
-            'name' => 'work'
+            'name' => 'work',
+            'description' => 'work',
+            'color' => 'groc'
         ]);
         $tag3 = Tag::create([
-            'name' => 'studies'
+            'name' => 'studies',
+            'description' => 'studies',
+            'color' => 'rosa'
         ]);
 
         $tags = [$tag1, $tag2, $tag3];
@@ -127,7 +134,9 @@ class TagTest extends TestCase
         ]);
 
         $tag = Tag::create([
-            'name' => 'home'
+            'name' => 'home',
+            'description' => 'home',
+            'color' => 'blau'
         ]);
 
         // execució
@@ -160,17 +169,24 @@ class TagTest extends TestCase
      */
     public function map()
     {
-        //1
-
-    $user = factory(User::class)->create();
-        $task = Task::create([
-            'name' => 'Compra pa',
-            'completed' => false,
-            'user_id' => $user->id
+        $tag = Tag::create([
+            'name' => 'Tag1',
+            'color' => 'blue',
+            'description' => 'bla bla bla',
         ]);
-
-
-
+        $mappedTag = $tag->map();
+        $this->assertEquals($mappedTag['id'],1);
+        $this->assertEquals($mappedTag['name'],'Tag1');
+        $this->assertEquals($mappedTag['description'],'bla bla bla');
+        $this->assertNotNull($mappedTag['created_at']);
+        $this->assertNotNull($mappedTag['created_at_formatted']);
+        $this->assertNotNull($mappedTag['created_at_human']);
+        $this->assertNotNull($mappedTag['created_at_timestamp']);
+        $this->assertNotNull($mappedTag['updated_at']);
+        $this->assertNotNull($mappedTag['updated_at_human']);
+        $this->assertNotNull($mappedTag['updated_at_formatted']);
+        $this->assertNotNull($mappedTag['updated_at_timestamp']);
+        $this->assertEquals($mappedTag['full_search'],'1 Tag1 blue bla bla bla');
     }
 
 }

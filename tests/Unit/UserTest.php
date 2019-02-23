@@ -3,6 +3,8 @@
 
 namespace Tests\Unit;
 
+use App\Avatar;
+use App\Photo;
 use App\Task;
 use App\User;
 use Tests\TestCase;
@@ -168,11 +170,12 @@ class UserTest extends TestCase
         $this->assertCount(2,$regularusers = User::regular()->get());
         $this->assertEquals($regularusers[0]->name,'Pepe Pardo Jeans');
         $this->assertEquals($regularusers[1]->name, 'Pepa Parda Jeans');
-        try {
-            $regularusers[2];
-        } catch (Exception $e) {
-            dump($e);
-        }
+        // impossible to test
+//        try {
+//            $regularusers[2];
+//        } catch (Exception $e) {
+//            dump($e);
+//        }
 
     }
 }
