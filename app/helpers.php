@@ -387,7 +387,7 @@ if (!function_exists('create_example_tasks')) {
 //                ]);
 //                $sergitur->admin = true;
 //                $sergitur->save();
-//            } catch (Exception $e) {
+//            } catch (Exception $e) {2
 //            }
             $sergitur = User::where('email','sergiturbadenas@gmail.com')->first();
             Task::create([
