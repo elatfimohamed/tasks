@@ -389,6 +389,7 @@ if (!function_exists('create_example_tasks')) {
 //                $sergitur->save();
 //            } catch (Exception $e) {
 //            }
+            $sergitur = User::where('email','sergiturbadenas@gmail.com')->first();
             Task::create([
                 'name' => 'Tasca Sergi Tur',
                 'completed' => false,

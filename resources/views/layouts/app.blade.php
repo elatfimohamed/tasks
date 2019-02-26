@@ -92,7 +92,7 @@
                 app
         >
             <v-card>
-                <v-card-title class="black darken-3 white--text"><h4>Perfil</h4></v-card-title>
+                <v-card-title class="primary darken-3 white--text"><h4>Perfil</h4></v-card-title>
                 <v-layout row wrap>
                     <v-flex xs12>
                         <ul>
@@ -107,7 +107,7 @@
                 </v-layout>
             </v-card>
             <v-card>
-                <v-card-title class="black darken-3 white--text"><h4>Opcions administrador</h4></v-card-title>
+                <v-card-title class="primary darken-3 white--text"><h4>Opcions administrador</h4></v-card-title>
 
                 <v-layout row wrap>
                     @impersonating
@@ -130,7 +130,7 @@
             </v-card>
         </v-navigation-drawer>
         <v-toolbar
-                color="black"
+                color="primary"
                 dark
                 app
                 clipped-left

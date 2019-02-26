@@ -75543,7 +75543,7 @@ var render = function() {
         [
           _c(
             "v-toolbar",
-            { staticClass: "white--text", attrs: { color: "black" } },
+            { staticClass: "white--text", attrs: { color: "primary" } },
             [
               _c(
                 "v-btn",
@@ -76116,7 +76116,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-toolbar",
-        { attrs: { color: "black" } },
+        { attrs: { color: "primary darken-1" } },
         [
           _c(
             "v-menu",
@@ -76425,7 +76425,11 @@ var render = function() {
             },
             [
               _c("v-progress-linear", {
-                attrs: { slot: "progress", color: "black", indeterminate: "" },
+                attrs: {
+                  slot: "progress",
+                  color: "primary",
+                  indeterminate: ""
+                },
                 slot: "progress"
               })
             ],

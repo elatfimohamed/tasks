@@ -3,7 +3,7 @@
 
         <v-dialog v-model="createDialog" fullscreen transition="dialog-bottom-transition"
                   @keydown.esc="createDialog=false">
-            <v-toolbar color="black" class="white--text">
+            <v-toolbar color="primary" class="white--text">
                 <v-btn flat icon class="white--text" @click="createDialog=false">
                     <v-icon class="mr-2">close</v-icon>
                 </v-btn>
@@ -116,7 +116,7 @@
             </v-card>
         </v-dialog>
 
-        <v-toolbar color="black">
+        <v-toolbar color="primary darken-1">
             <v-menu>
                 <v-btn slot="activator" icon dark>
                     <v-icon>more_vert</v-icon>
@@ -179,7 +179,7 @@
                     :pagination.sync="pagination"
                     class="hidden-md-and-down"
             >
-                <v-progress-linear slot="progress" color="black" indeterminate></v-progress-linear>
+                <v-progress-linear slot="progress" color="primary" indeterminate></v-progress-linear>
                 <template slot="items" slot-scope="{item:task}">
                     <tr>
                         <td>{{task.id}}</td>
