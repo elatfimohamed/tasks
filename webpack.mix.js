@@ -1,9 +1,8 @@
-const workboxPlugin = require('workbox-webpack-plugin')
-const mix = require('laravel-mix');
-const replace = require( 'replace-in-file' );
-const path = require( 'path' );
-const publicDir = 'public/';
-
+// const workboxPlugin = require('workbox-webpack-plugin')
+const mix = require('laravel-mix')
+// const replace = require('replace-in-file')
+// const path = require('path')
+// const publicDir = 'public/'
 
 /*
  |--------------------------------------------------------------------------
@@ -17,4 +16,4 @@ const publicDir = 'public/';
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+  .sass('resources/sass/app.scss', 'public/css')
