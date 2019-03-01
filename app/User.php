@@ -112,8 +112,20 @@ class User extends Authenticatable
                'gravatar' => $this->gravatar,
                'admin' => (boolean) $this->admin,
                'roles' => $this->roles()->pluck('name')->unique()->toArray(),
-               'permissions' => $this->getAllPermissions()->pluck('name')->unique()->toArray()
+               'permissions' => $this->getAllPermissions()->pluck('name')->unique()->toArray(),
+                'hash_id' => $this->hash_id,
+        ];
+    }
 
+    public function mapSimple()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'gravatar' => $this->gravatar,
+            'admin' => (boolean) $this->admin,
+            'hash_id' => $this->hash_id,
         ];
     }
 
@@ -126,6 +138,17 @@ class User extends Authenticatable
     {
         $hashids = new \Hashids\Hashids(config('tasks.salt'));
         return $hashids->encode($this->getKey());
+    }
+
+    /**
+     * Get the photo path prefix.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getHashIdAttribute($value)
+    {
+        return $this->hashedKey();
     }
 
     /**

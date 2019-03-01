@@ -6,109 +6,80 @@ namespace Tests\Feature;
 use App\Tag;
 use App\User;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Tests\Feature\Traits\CanLogin;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TagsControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
-//    use WithoutMiddleware;
+    use RefreshDatabase, CanLogin;
+    /**
+     * @test
+     */
+    public function guest_user_cannot_index_tags()
+    {
+        $response = $this->get('/tags');
+        $response->assertRedirect('login');
+    }
 
     /**
      * @test
      */
-    public function can_show_tags()
+    public function regular_user_cannot_index_tags()
     {
-//        $this->withoutExceptionHandling();
+        $this->login();
+        $response = $this->get('/tags');
+        $response->assertStatus(403);
+    }
 
-        //1 Prepare
+    /**
+     * @test
+     */
+    public function superadmin_can_index_tags()
+    {
+        //$this->withExceptionHandling();
         create_example_tags();
-        login($this);
 
-//        dd(Task::find(1));
-
-        // 2 execute
+        $user = $this->loginAsSuperAdmin();
         $response = $this->get('/tags');
         $response->assertSuccessful();
-        $response->assertSee('Tasques');
-
-        $response->assertSee('comprar pa');
-        $response->assertSee('comprar llet');
-        $response->assertSee('Estudiar PHP');
-
-
+        $response->assertViewIs('tags');
+        $response->assertViewHas('tags', function ($tags) {
+            return count($tags) === 3;
+        });
     }
 
     /**
      * @test
      */
-
-    public function guest_user_can_show_tags()
+    public function tag_manager_can_index_tags()
     {
-//        $this->withoutExceptionHandling();
+        create_example_tags();
 
-
-        // 2 execute
+        $this->loginAsTagsManager();
         $response = $this->get('/tags');
-        $response->assertRedirect('');
-
+        $response->assertSuccessful();
+        $response->assertViewIs('tags');
+        $response->assertViewHas('tags', function ($tags) {
+            return count($tags) === 3;
+        });
     }
 
     /**
      * @test
      */
-    public function regular_user_can_show_tags()
+    public function tags_user_cannot_index_tags()
     {
-//        $this->withoutExceptionHandling();
+        $user = $this->loginAsUsingRole('web','Tags');
 
-
-        // 2 execute
+        $tag = Tag::create([
+            'name' => 'Tasca usuari logat',
+            'description' => 'Jorl',
+            'color' => 'red'
+        ]);
+        $this->assertNotNull($user);
+        $this->assertNotNull($tag);
         $response = $this->get('/tags');
-        $response->assertRedirect('');
-
+        $response->assertStatus(403);
     }
-
-    /**
-     * @test
-     */
-
-    public function superadmin_user_can_show_tags()
-    {
-
-
-
-    }
-
-
-    public function logingAsUsingRole($guard = null, $role)
-    {
-        initialize_roles();
-        $user = factory(User::class)->create();
-        $user->assignRole($role);
-        $this->actingAs($user);
-
-        // 2 execute
-        $response = $this->get('/tags');
-        $response->assertRedirect('');
-    }
-
-
-    public function logingAsgRole($guard = null, $role)
-    {
-        initialize_roles();
-        $user = factory(User::class)->create();
-        $user->assignRole($role);
-        $this->actingAs($user);
-
-        // 2 execute
-        $response = $this->get('/tags');
-        $response->assertRedirect('');
-    }
-
 }
-
-
-
-
-

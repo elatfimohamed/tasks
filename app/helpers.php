@@ -1,5 +1,6 @@
 <?php
 
+use App\Log;
 use App\Tag;
 use App\Task;
 use App\User;
@@ -21,7 +22,7 @@ if (!function_exists('create_primary_user')) {
         $user = User::where('email', 'mohamedelatfi@iesebre.com')->first();
         if (!$user) {
             $user = User::firstOrCreate([
-                'name' => 'Mohamed Elatfi ',
+                'name' => 'Mohamed Elatfi',
                 'email' => 'mohamedelatfi@iesebre.com',
                 'password' => bcrypt(env('PRIMARY_USER_PASSWORD','123456'))
             ]);
@@ -309,6 +310,18 @@ if (!function_exists('create_example_tasks')) {
         }
     }
 
+    if (!function_exists('create_acacha_user')) {
+        function create_acacha_user()
+        {
+            $sergitur = factory(User::class)->create([
+                'name' => 'Sergi Tur',
+                'email' => 'sergiturbadenas@gmail.com',
+                'password' => bcrypt(env('ACACHA_USER_PASSWORD', 'secret'))
+            ]);
+            $sergitur->admin = true;
+            $sergitur->save();
+        }
+    }
 
     if (!function_exists('create_sample_users')) {
         function create_sample_users()
@@ -366,16 +379,17 @@ if (!function_exists('create_example_tasks')) {
                 $homersimpson->assignRole('Tasks');
             } catch (Exception $e) {
             }
-            try {
-                $sergitur = factory(User::class)->create([
-                    'name' => 'Sergi Tur',
-                    'email' => 'sergiturbadenas@gmail.com',
-                    'password' => bcrypt(env('PRIMARY_USER_PASSWORD', 'secret'))
-                ]);
-                $sergitur->admin = true;
-                $sergitur->save();
-            } catch (Exception $e) {
-            }
+//            try {
+//                $sergitur = factory(User::class)->create([
+//                    'name' => 'Sergi Tur',
+//                    'email' => 'sergiturbadenas@gmail.com',
+//                    'password' => bcrypt(env('PRIMARY_USER_PASSWORD', 'secret'))
+//                ]);
+//                $sergitur->admin = true;
+//                $sergitur->save();
+//            } catch (Exception $e) {2
+//            }
+            $sergitur = User::where('email','sergiturbadenas@gmail.com')->first();
             Task::create([
                 'name' => 'Tasca Sergi Tur',
                 'completed' => false,
@@ -498,5 +512,131 @@ if (! function_exists('git_remote_origin_url')) {
     {
         exec("git config --get remote.origin.url", $output);
         return $output[0];
+    }
+}
+
+if (! function_exists('create_sample_task')) {
+    function create_sample_task($user)
+    {
+        $task = Task::create([
+            'name' => 'Comprar pa',
+            'description' => 'Bla bla bla',
+            'completed' => false,
+        ]);
+        $task->assignUser($user);
+
+        $tag1 = Tag::create([
+            'name' => 'Tag1',
+            'color' => 'blue',
+            'description' => 'bla bla bla'
+        ]);
+        $tag2 = Tag::create([
+            'name' => 'Tag2',
+            'color' => 'red',
+            'description' => 'Jorl Jorl'
+        ]);
+
+        $task->addTag($tag1);
+        $task->addTag($tag2);
+        return $task;
+    }
+}
+
+if (! function_exists('sample_logs')) {
+    function sample_logs()
+    {
+        $user1 = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+
+        $task = Task::create([
+            'name' => 'Comprar pa',
+        ]);
+        $task->assignUser($user1);
+
+        $log1 = Log::create([
+            'text' => 'Ha creat la tasca TODO_LINK_TASCA',
+            'time' => Carbon::now(),
+            'action_type' => 'store',
+            'module_type' => 'Tasks',
+            'loggable_id' => $task->id,
+            'loggable_type' => Task::class,
+            'user_id' => $user1->id,
+            'icon' => 'home',
+            'color' => 'teal'
+        ]);
+        $log2 = Log::create([
+            'text' => 'Ha modificat la tasca TODO_LINK_TASCA',
+            'time' => Carbon::now(),
+            'action_type' => 'update',
+            'module_type' => 'Tasks',
+            'loggable_id' => 1,
+            'loggable_type' => Task::class,
+            'user_id' => $user2->id,
+            'icon' => 'home',
+            'color' => 'teal'
+        ]);
+        $log3 = Log::create([
+            'text' => 'Ha modificat la tasca TODO_LINK_TASCA',
+            'time' => Carbon::now(),
+            'action_type' => 'update',
+            'module_type' => 'Tasks',
+            'loggable_id' => 1,
+            'loggable_type' => Task::class,
+            'user_id' => $user2->id,
+            'icon' => 'home',
+            'color' => 'teal'
+        ]);
+        $log4 = Log::create([
+            'text' => 'BLA BLA BLA',
+            'time' => Carbon::now(),
+            'action_type' => 'update',
+            'module_type' => 'OtherModule',
+            'loggable_id' => 1,
+            'loggable_type' => User::class,
+            'user_id' => $user2->id,
+            'icon' => 'home',
+            'color' => 'teal'
+        ]);
+        return [$log1,$log2,$log3,$log4];
+    }
+}
+
+if (! function_exists('is_valid_uuid')) {
+    /**
+     * Check if a given string is a valid UUID
+     *
+     * @param   string $uuid The string to check
+     * @return  boolean
+     */
+    function is_valid_uuid($uuid)
+    {
+
+        if (!is_string($uuid) || (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $uuid) !== 1)) {
+            return false;
+        }
+        return true;
+    }
+}
+
+if (! function_exists('set_sample_notifications_to_user')) {
+    function set_sample_notifications_to_user($user) {
+        $user->notify(new SimpleNotification('Notification 1'));
+        $user->notify(new SimpleNotification('Notification 2'));
+        $user->notify(new SimpleNotification('Notification 3'));
+    }
+}
+
+if (! function_exists('sample_notifications')) {
+    function sample_notifications() {
+        $user1 = factory(User::class)->create([
+            'name' => 'Homer Simpson',
+            'email' => 'homer@lossimpsons.com'
+        ]);
+        $user2 = factory(User::class)->create([
+            'name' => 'Bart Simpson',
+            'email' => 'bart@lossimpsons.com'
+        ]);
+        $user1->notify(new SimpleNotification('Sample Notification 1'));
+        $user2->notify(new SimpleNotification('Sample Notification 2'));
     }
 }

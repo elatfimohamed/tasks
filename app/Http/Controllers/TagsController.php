@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Task;
+use App\Http\Requests\TagsIndex;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class TagsController extends Controller
 {
     public function index(TagsIndex $request)
     {
-        $tasks = Task::orderBy('created_at', 'desc')->get();
+        $tags = Tag::orderBy('created_at', 'desc')->get();
 
-        return view('tasks', ['tasks' => $tasks]);
+        return view('tags', compact('tags'));
     }
 
     public function store(Request $request)

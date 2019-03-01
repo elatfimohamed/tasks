@@ -7,7 +7,7 @@
 */
 
 namespace Tests\Feature\Api;
-
+use Tests\TestCase;
 
 
 
