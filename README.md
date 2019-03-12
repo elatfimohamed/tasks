@@ -121,3 +121,11 @@ var app = document.getElementById('app')
 * git pull origin production (Al server)
 
 
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/elatfimohamed/tasks/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/elatfimohamed/tasks/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/elatfimohamed/tasks/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/elatfimohamed/tasks/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/elatfimohamed/tasks/badges/build.png?b=master)](https://scrutinizer-ci.com/g/elatfimohamed/tasks/build-status/master)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/elatfimohamed/tasks/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
+[![StyleCI](https://github.styleci.io/repos/156759293/shield?branch=master)]
+
+
