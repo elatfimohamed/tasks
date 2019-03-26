@@ -164,7 +164,6 @@ class TasksControllerTest extends TestCase
 
         $result = json_decode($response->getContent());
         $response->assertSuccessful();
-
         $this->assertNotNull($task = Task::find($result->id));
         $this->assertEquals('Comprar pa',$result->name);
         $this->assertFalse($result->completed);
